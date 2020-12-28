@@ -5,12 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.json.bind.annotation.JsonbNillable;
 import java.util.Objects;
 import java.util.UUID;
 
 @ToString(callSuper = true)
 @Data
 @NoArgsConstructor
+
+@JsonbNillable(value = true)
 public abstract class Good {
 
     private UUID uuid;

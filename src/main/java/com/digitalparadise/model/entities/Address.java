@@ -5,19 +5,26 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.json.bind.annotation.JsonbCreator;
+import javax.json.bind.annotation.JsonbProperty;
+
 @Getter
 @Setter
 @ToString
 public class Address {
-    
+
+    @JsonbProperty
     private String street;
 
+    @JsonbProperty
     private String number;
 
     public Address() {
     }
 
-    public Address(String street, String number) throws AddressException {
+    @JsonbCreator
+    public Address(@JsonbProperty("street") String street,
+                   @JsonbProperty("number") String number) throws AddressException {
 
         if (street == null || number == null)
             throw new AddressException(AddressException.NULL_FIELD);

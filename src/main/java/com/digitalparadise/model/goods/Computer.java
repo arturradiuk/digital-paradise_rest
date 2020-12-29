@@ -7,9 +7,14 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import com.digitalparadise.model.entities.Good;
 
+import javax.json.bind.annotation.JsonbCreator;
+import javax.json.bind.annotation.JsonbNillable;
+import javax.json.bind.annotation.JsonbProperty;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@JsonbNillable(value = true)
 public abstract class Computer extends Good {
     private int ram;
     private int ssdCapacity;
@@ -18,7 +23,12 @@ public abstract class Computer extends Good {
         super();
     }
 
-    public Computer(double basePrice, String goodName, int ram, int ssdCapacity, int count) throws GoodException {
+    @JsonbCreator
+    public Computer(@JsonbProperty("basePrice") double basePrice,
+                    @JsonbProperty("goodName") String goodName,
+                    @JsonbProperty("ram") int ram,
+                    @JsonbProperty("ssdCapacity") int ssdCapacity,
+                    @JsonbProperty("count") int count) throws GoodException {
         super(basePrice, goodName, count);
         if (ram < 0) {
             throw new ComputerException(ComputerException.NEGATIVE_RAM);

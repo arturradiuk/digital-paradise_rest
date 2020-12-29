@@ -12,9 +12,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-@ToString(callSuper = true)
+
 @Data
 @NoArgsConstructor
+@ToString(callSuper = true)
 public class Order {
     private UUID uuid;
     private LocalDateTime orderDateTime;

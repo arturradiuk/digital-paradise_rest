@@ -6,9 +6,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import javax.json.bind.annotation.JsonbCreator;
+import javax.json.bind.annotation.JsonbNillable;
+import javax.json.bind.annotation.JsonbProperty;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@JsonbNillable(value = true)
 public class Laptop extends Computer {
     private double screenSize;
     private boolean hasCamera;
@@ -18,7 +23,15 @@ public class Laptop extends Computer {
         super();
     }
 
-    public Laptop(double basePrice, String goodName, int ram, int ssdCapacity, double screenSize, boolean hasCamera, int usbAmount, int count) throws GoodException {
+    @JsonbCreator
+    public Laptop(@JsonbProperty("basePrice") double basePrice,
+                  @JsonbProperty("goodName") String goodName,
+                  @JsonbProperty("ram") int ram,
+                  @JsonbProperty("ssdCapacity") int ssdCapacity,
+                  @JsonbProperty("screenSize") double screenSize,
+                  @JsonbProperty("hasCamera") boolean hasCamera,
+                  @JsonbProperty("usbAmount") int usbAmount,
+                  @JsonbProperty("count") int count) throws GoodException {
         super(basePrice, goodName, ram, ssdCapacity, count);
         if (screenSize < 0) {
             throw new LaptopException(LaptopException.NEGATIVE_SCREEN_SIZE);

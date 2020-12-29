@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.json.bind.annotation.JsonbCreator;
 import javax.json.bind.annotation.JsonbNillable;
+import javax.json.bind.annotation.JsonbProperty;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -16,15 +18,15 @@ import java.util.UUID;
 @JsonbNillable(value = true)
 public abstract class Good {
 
+    @JsonbProperty
     private UUID uuid;
-
+    @JsonbProperty
     private boolean sold = false;
-
-
+    @JsonbProperty
     private String goodName;
-
+    @JsonbProperty
     private double basePrice;
-
+    @JsonbProperty
     private int count;
 
     public void setCount(int count) {
@@ -46,7 +48,11 @@ public abstract class Good {
         this.count = count;
     }
 
-    public Good(UUID uuid, double basePrice, String goodName, int count) throws GoodException {
+    @JsonbCreator
+    public Good(@JsonbProperty("uuid") UUID uuid,
+                @JsonbProperty("basePrice") double basePrice,
+                @JsonbProperty("goodName") String goodName,
+                @JsonbProperty("count") int count) throws GoodException {
         if (uuid == null || goodName == null) {
             throw new GoodException(GoodException.NULL_ARGUMENT);
         }

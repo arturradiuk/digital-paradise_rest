@@ -1,11 +1,12 @@
 package com.digitalparadise.web.utils;
 
-import com.digitalparadise.web.SignableEntity;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 
 import java.text.ParseException;
+import com.digitalparadise.web.*;
+
 
 public class EntityIdentitySignerVerifier {
 //    rPIU2Cx

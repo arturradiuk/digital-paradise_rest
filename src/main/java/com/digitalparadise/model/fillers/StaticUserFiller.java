@@ -22,6 +22,7 @@ public class StaticUserFiller implements DataFiller { // todo rename to people f
             e.printStackTrace();
         }
         try {
+
             User temp = new Client(null,"Tola@gmail.com", "Tola", address,"672817289","123");
 //            temp.setUuid(UUID.nameUUIDFromBytes(new String("1234567890_person").getBytes()));
             temp.setUuid(UUID.fromString("1d6b6bd5-be82-3a41-87ac-5cd1b3b24756"));

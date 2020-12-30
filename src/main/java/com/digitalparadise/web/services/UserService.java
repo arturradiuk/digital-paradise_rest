@@ -66,7 +66,8 @@ public class UserService {
         try {
 
             storedUser = userManager.getUserByUUID(userUuid);
-            return Response.ok().entity(storedUser).build();
+            return Response.ok().entity(storedUser).tag(EntityIdentitySignerVerifier
+                    .calculateEntitySignature(storedUser)).build();
 
         } catch (RepositoryException e) {
             e.printStackTrace();
@@ -92,7 +93,8 @@ public class UserService {
 
             storedUser = userManager.getUserByUUID(userUuid);
             if (storedUser instanceof Client)
-                return Response.ok().entity(storedUser).build();
+                return Response.ok().entity(storedUser).tag(EntityIdentitySignerVerifier
+                        .calculateEntitySignature(storedUser)).build();
 
         } catch (RepositoryException e) {
             e.printStackTrace();
@@ -117,7 +119,10 @@ public class UserService {
 
             storedUser = userManager.getUserByUUID(userUuid);
             if (storedUser instanceof Administrator)
-                return Response.ok().entity(storedUser).build();
+                return Response.ok().entity(storedUser)
+                        .tag(EntityIdentitySignerVerifier
+                        .calculateEntitySignature(storedUser))
+                        .build();
 
         } catch (RepositoryException e) {
             e.printStackTrace();
@@ -158,6 +163,10 @@ public class UserService {
     @EntitySignatureValidatorFilterBinding
     public Response updateClient(@PathParam("uuid") String uuid, @HeaderParam("If-Match") @NotNull @NotEmpty String tagValue, Client client) {
 
+        if (client.getActive() == null || client.getName() == null || client.getPassword() == null || client.getEmail() == null || client.getUuid() == null || client.getPhoneNumber() == null || client.getAddress() == null) {
+            return Response.status(422).build();
+        }
+
         if (!EntityIdentitySignerVerifier.verifyEntityIntegrity(tagValue, client)) {
             return Response.status(406).build();
         }
@@ -181,10 +190,6 @@ public class UserService {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        if (client.getActive() == null || client.getName() == null || client.getPassword() == null || client.getEmail() == null || client.getUuid() == null || client.getPhoneNumber() == null || client.getAddress() == null) {
-            return Response.status(422).build();
-        }
-
         try {
             this.userManager.update(userUuid, client);
             return Response.status(204).build();
@@ -200,6 +205,10 @@ public class UserService {
     @Consumes({MediaType.APPLICATION_JSON})
     @EntitySignatureValidatorFilterBinding
     public Response updateAdmin(@PathParam("uuid") String uuid, @HeaderParam("If-Match") @NotNull @NotEmpty String tagValue, Administrator admin) {
+        if (admin.getIsHeadAdmin() == null || admin.getName() == null || admin.getPassword() == null || admin.getEmail() == null || admin.getUuid() == null || admin.getAddress() == null) {
+            return Response.status(422).build();
+        }
+
         if (!EntityIdentitySignerVerifier.verifyEntityIntegrity(tagValue, admin)) {
             return Response.status(406).build();
         }
@@ -223,9 +232,7 @@ public class UserService {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        if (admin.getIsHeadAdmin() == null || admin.getName() == null || admin.getPassword() == null || admin.getEmail() == null || admin.getUuid() == null || admin.getAddress() == null) {
-            return Response.status(422).build();
-        }
+
 
         try {
             this.userManager.update(userUuid, admin);
@@ -241,6 +248,10 @@ public class UserService {
     @Consumes({MediaType.APPLICATION_JSON})
     @EntitySignatureValidatorFilterBinding
     public Response updateEmployee(@PathParam("uuid") String uuid, @HeaderParam("If-Match") @NotNull @NotEmpty String tagValue, Employee employee) throws Exception {
+        if (employee.getEarnings() == null || employee.getName() == null || employee.getPassword() == null || employee.getEmail() == null || employee.getUuid() == null || employee.getAddress() == null) {
+            return Response.status(422).build();
+        }
+//
         if (!EntityIdentitySignerVerifier.verifyEntityIntegrity(tagValue, employee)) {
             return Response.status(406).build();
         }
@@ -264,9 +275,7 @@ public class UserService {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        if (employee.getEarnings() == null || employee.getName() == null || employee.getPassword() == null || employee.getEmail() == null || employee.getUuid() == null || employee.getAddress() == null) {
-            return Response.status(422).build();
-        }
+
 
         try {
             this.userManager.update(userUuid, employee);
@@ -283,7 +292,7 @@ public class UserService {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response add(Client client) {
 
-        if (client.getActive() == null || client.getName() == null || client.getPassword() == null || client.getEmail() == null || client.getUuid() == null || client.getPhoneNumber() == null || client.getAddress() == null) {
+        if (client.getActive() == null || client.getName() == null || client.getPassword() == null || client.getEmail() == null  || client.getPhoneNumber() == null || client.getAddress() == null) {
             return Response.status(422).build();
         }
 
@@ -302,7 +311,7 @@ public class UserService {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response add(Employee employee) throws UserManagerException {
 
-        if (employee.getEarnings() == null || employee.getName() == null || employee.getPassword() == null || employee.getEmail() == null || employee.getUuid() == null || employee.getAddress() == null) {
+        if (employee.getEarnings() == null || employee.getName() == null || employee.getPassword() == null || employee.getEmail() == null  || employee.getAddress() == null) {
             return Response.status(422).build();
         }
 
@@ -320,7 +329,7 @@ public class UserService {
     @Path("/administrator")
     @Consumes({MediaType.APPLICATION_JSON})
     public Response add(Administrator admin) throws UserManagerException {
-        if (admin.getIsHeadAdmin() == null || admin.getName() == null || admin.getPassword() == null || admin.getEmail() == null || admin.getUuid() == null || admin.getAddress() == null) {
+        if (admin.getIsHeadAdmin() == null || admin.getName() == null || admin.getPassword() == null || admin.getEmail() == null  || admin.getAddress() == null) {
             return Response.status(422).build();
         }
 

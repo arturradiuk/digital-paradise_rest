@@ -122,7 +122,9 @@ public class UserRepository implements Repository<User, UUID> { // todo write me
                     return client;
                 } else
                     return null;
-            }
+            }else
+                return user;
+
         }
         return null;
 

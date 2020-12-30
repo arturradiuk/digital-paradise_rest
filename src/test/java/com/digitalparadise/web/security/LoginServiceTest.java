@@ -27,6 +27,7 @@ public class LoginServiceTest {
         Assert.assertEquals(response.statusCode(), javax.ws.rs.core.Response.Status.ACCEPTED.getStatusCode());
         Assert.assertEquals(response.getHeader("Content-Type"),"application/jwt");
     }
+
     @Test
     public void clientUnSuccessfulSignUp(){
 //      http --verify=no -v POST https://localhost:8181/digital-paradise/authenticate email=Tola@gmail.com password=haslo
@@ -44,7 +45,6 @@ public class LoginServiceTest {
 
         Assert.assertEquals(response.statusCode(), javax.ws.rs.core.Response.Status.UNAUTHORIZED.getStatusCode());
         Assert.assertNotEquals(response.getHeader("Content-Type"),"application/jwt");
-
     }
 
 }

@@ -12,12 +12,27 @@ public class UserServiceTest {
 
     @Test
     public void clientSignUpTest() {
-//      http --verify=no -v POST https://localhost:8181/digital-paradise/authenticate email=Tola@gmail.com password=123
+//    http --verify=no -v POST https://localhost:8181/digital-paradise/authenticate email=Lolek@gmail.com password=123
 
+    }
+    @Test
+    public void employeeSignUpTest() {
+//    http --verify=no -v POST https://localhost:8181/digital-paradise/authenticate email=TolaEmployee@gmail.com password=123
+    }
+
+    @Test
+    public void administratorSignUpTest() {
+//    http --verify=no -v POST https://localhost:8181/digital-paradise/authenticate email=TolaEmployee@gmail.com password=123
+    }
+
+    @Test
+    public void clientAccessTest(){
+//   http --verify=no -v GET https://localhost:8181/digital-paradise/users/_self "Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMb2xla0BnbWFpbC5jb20iLCJhdXRoIjoiQ0xJRU5UIiwiaXNzIjoiRGlnaXRhbCBwYXJhZGlzZSBzdG9yZSIsImV4cCI6MTYwOTM2NTk1N30.jiu0zLW4Xd6oi2kqhoX7ZXCBS-4iWjOEF_Y2LXj8gjk"
 
         RestAssured.baseURI = "https://localhost:8181/digital-paradise";
         RequestSpecification request = RestAssured.given();
         request.relaxedHTTPSValidation(); // --verify=no
+
         JSONObject requestParams = new JSONObject();
         requestParams.put("email", "Tola@gmail.com");
         requestParams.put("password", "123");
@@ -28,15 +43,26 @@ public class UserServiceTest {
         Response response = request.post("/authenticate");
 
         Assert.assertEquals(response.statusCode(), javax.ws.rs.core.Response.Status.ACCEPTED.getStatusCode());
+        Assert.assertEquals(response.getHeader("Content-Type"),"application/jwt");
 
-        System.out.println(response.asString());
-        System.out.println(response.getBody().asString());
-        System.out.println(response.getStatusCode());
-        System.out.println(response.getStatusLine());
-        System.out.println(response.getHeader("content-type"));
-        System.out.println(response.getHeaders());
-        System.out.println(response.asString());
-        System.out.println(response.getTime());
+        String jwt = response.getBody().asString();
+
+//        RestAssured.baseURI = "https://localhost:8181/digital-paradise";
+//        request = RestAssured.given();
+//        request.relaxedHTTPSValidation(); // --verify=no
+
+
+
+
+    }
+
+    @Test
+    public void employeeAccessTest(){
+
+    }
+
+    @Test
+    public void adminAccessTest(){
 
     }
 

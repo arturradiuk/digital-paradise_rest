@@ -13,7 +13,6 @@ import java.util.UUID;
 
 @Data
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 
 @JsonbNillable(value = true)
@@ -23,25 +22,26 @@ public class Administrator extends User {
     @JsonbProperty
     private Boolean isHeadAdmin;
 
-    public Administrator(String email, String name, Address address, Boolean isHeadAdmin) throws UserException {
-        super(email, name, address);
+//    public Administrator(String email, String name, Address address, Boolean isHeadAdmin) throws UserException {
+//        super(email, name, address);
+//
+//        if (isHeadAdmin == null)
+//            throw new AdminException(AdminException.NULL_FIELD);
+//
+//        //        if (isHeadAdmin.equals(""))
+//        //            throw new AdminException(AdminException.EMPTY_FIELD);
+//
+//        this.isHeadAdmin = isHeadAdmin;
+//    }
 
-        if (isHeadAdmin == null)
-            throw new AdminException(AdminException.NULL_FIELD);
-
-        //        if (isHeadAdmin.equals(""))
-        //            throw new AdminException(AdminException.EMPTY_FIELD);
-
-        this.isHeadAdmin = isHeadAdmin;
-    }
-
-    @JsonbCreator
-    public Administrator(@JsonbProperty("uuid") UUID uuid,
+//    @JsonbCreator
+        public Administrator(@JsonbProperty("uuid") UUID uuid,
                          @JsonbProperty("email") String email,
                          @JsonbProperty("name") String name,
                          @JsonbProperty("address") Address address,
-                         @JsonbProperty("isHeadAdmin") Boolean isHeadAdmin) throws UserException {
-        super(uuid, email, name, address);
+                         @JsonbProperty("isHeadAdmin") Boolean isHeadAdmin,
+                             @JsonbProperty("password") String password) throws UserException {
+        super(uuid, email, name, address,password);
 
         if (isHeadAdmin == null)
             throw new AdminException(AdminException.NULL_FIELD);
@@ -50,5 +50,12 @@ public class Administrator extends User {
 //            throw new AdminException(AdminException.EMPTY_FIELD);
 
         this.isHeadAdmin = isHeadAdmin;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return super.equals(o);
     }
 }

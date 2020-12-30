@@ -32,23 +32,23 @@ public class InMemoryIdentityStore implements IdentityStore {
     @Override
     public CredentialValidationResult validate(Credential credential) {
         try {
-
             if (credential instanceof UsernamePasswordCredential) {
                 UsernamePasswordCredential usernamePasswordCredential = (UsernamePasswordCredential) credential;
 
-//            Account account = accountRepo.findByLoginPasswordActive(usernamePasswordCredential.getCaller(), usernamePasswordCredential.getPasswordAsString());
                 User user = userRepository.findByLoginPasswordActive(usernamePasswordCredential.getCaller(), usernamePasswordCredential.getPasswordAsString());
 
                 String group = null;
                 if (user instanceof Client)
-                    group = "CLIENT";//Client.class.getName();
+                    group = "CLIENT";
                 if (user instanceof Administrator)
-                    group = "ADMIN";//Administrator.class.getName();
+                    group = "ADMIN";
                 if (user instanceof Employee)
-                    group = "EMPLOYEE";//Employee.class.getName();
+                    group = "EMPLOYEE";
 
+                Set<String> stringSet = new HashSet<>();
+                stringSet.add(group);
 
-                return (null != user ? new CredentialValidationResult(user.getEmail(), new HashSet<>(Arrays.asList(new String[]{group}))) : CredentialValidationResult.INVALID_RESULT);
+                return (null != user ? new CredentialValidationResult(user.getEmail(), stringSet) : CredentialValidationResult.INVALID_RESULT);
 
             }
         } catch (UserRepositoryException e) {

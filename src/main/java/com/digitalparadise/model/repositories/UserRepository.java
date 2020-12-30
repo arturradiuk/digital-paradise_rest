@@ -20,7 +20,7 @@ public class UserRepository implements Repository<User, UUID> { // todo write me
 
     private List<User> people;
 
-    private User getResourceByEmail(String email) throws UserRepositoryException {
+    public User getResourceByEmail(String email) throws UserRepositoryException {
         for (User u :
                 people) {
             if (u.getEmail().equals(email)) {

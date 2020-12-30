@@ -23,12 +23,12 @@ public class JWTGeneratorVerifier {
             JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
                     .subject(credential.getCallerPrincipal().getName())
                     .claim("auth", String.join(",", credential.getCallerGroups()))
-                    .issuer("PAS Simple Rest Api")
+                    .issuer("Digital paradise store")
                     .expirationTime(new Date(new Date().getTime()+JWT_TIMEOUT_MS))
                     .build();
 
             SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256),claimsSet);
-//            signedJWT.sign(new MACSigner(SECRET));
+
             signedJWT.sign(signer);
             return signedJWT.serialize();
         } catch (JOSEException e) {
@@ -48,9 +48,5 @@ public class JWTGeneratorVerifier {
             e.printStackTrace();
             return false;
         }
-
-
-
-//        return true; // todo implement
     }
 }

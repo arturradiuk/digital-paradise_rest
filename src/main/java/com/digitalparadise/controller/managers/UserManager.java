@@ -2,6 +2,8 @@ package com.digitalparadise.controller.managers;
 
 import com.digitalparadise.controller.exceptions.ManagerException;
 import com.digitalparadise.controller.exceptions.repository.RepositoryException;
+import com.digitalparadise.controller.exceptions.repository.UserRepositoryException;
+import com.digitalparadise.model.repositories.UserRepository;
 import lombok.NoArgsConstructor;
 import com.digitalparadise.model.clients.Administrator;
 import com.digitalparadise.model.clients.Client;
@@ -56,7 +58,7 @@ public class UserManager implements IManager<User, UUID> {
 
 
     public User getUserByUUID(UUID uuid) throws RepositoryException {
-       return this.userRepository.getResourceByUUID(uuid);
+        return this.userRepository.getResourceByUUID(uuid);
     }
 
 
@@ -75,4 +77,7 @@ public class UserManager implements IManager<User, UUID> {
         return people;
     }
 
+    public User findByEmail(String email) throws UserRepositoryException {
+        return ((UserRepository) this.userRepository).getResourceByEmail(email);
+    }
 }

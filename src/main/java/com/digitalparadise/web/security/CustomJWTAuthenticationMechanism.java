@@ -23,7 +23,7 @@ public class CustomJWTAuthenticationMechanism implements HttpAuthenticationMecha
     public final static String BEARER = "Bearer ";
 
     @Inject
-    private JWTGeneratorVerifier jwtGeneratorVerifier;
+    private JWTGeneratorVerifier jwtGeneratorVerifier; // todo check necessity
 
     @Override
     public AuthenticationStatus validateRequest(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, HttpMessageContext httpMessageContext) throws AuthenticationException {
@@ -57,13 +57,4 @@ public class CustomJWTAuthenticationMechanism implements HttpAuthenticationMecha
         return null;
     }
 
-//    @Override
-//    public AuthenticationStatus secureResponse(HttpServletRequest request, HttpServletResponse response, HttpMessageContext httpMessageContext) throws AuthenticationException {
-//        return null;
-//    }
-
-//    @Override
-//    public void cleanSubject(HttpServletRequest request, HttpServletResponse response, HttpMessageContext httpMessageContext) {
-//
-//    }
 }

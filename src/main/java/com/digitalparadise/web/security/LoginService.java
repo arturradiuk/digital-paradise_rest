@@ -32,7 +32,7 @@ public class LoginService {
     private IdentityStoreHandler identityStoreHandler;
 
     @POST
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.TEXT_PLAIN})
     public Response authenticate(@NotNull LoginData loginData){
 

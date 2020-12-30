@@ -45,41 +45,41 @@ public class UserService {
 //        }
 //    }
 
-//    @POST
-//    @Path("/client")
-//    @Consumes({MediaType.APPLICATION_JSON})
-//    public void add(Client client) throws UserManagerException {
-//        try {
-//            this.userManager.add(client);
-//        } catch (RepositoryException e) {
-//            e.printStackTrace();
-//            throw new UserManagerException(String.valueOf(Response.Status.CONFLICT));
-//        }
-//    }
-//
-//    @POST
-//    @Path("/employee")
-//    @Consumes({MediaType.APPLICATION_JSON})
-//    public void add(Employee employee) throws UserManagerException {
-//        try {
-//            this.userManager.add(employee);
-//        } catch (RepositoryException e) {
-//            e.printStackTrace();
-//            throw new UserManagerException(String.valueOf(Response.Status.CONFLICT));
-//        }
-//    }
-//
-//    @POST
-//    @Path("/administrator")
-//    @Consumes({MediaType.APPLICATION_JSON})
-//    public void add(Administrator administrator) throws UserManagerException {
-//        try {
-//            this.userManager.add(administrator);
-//        } catch (RepositoryException e) {
-//            e.printStackTrace();
-//            throw new UserManagerException(String.valueOf(Response.Status.CONFLICT));
-//        }
-//    }
+    @POST
+    @Path("/client")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void add(Client client) throws UserManagerException {
+        try {
+            this.userManager.add(client);
+        } catch (RepositoryException e) {
+            e.printStackTrace();
+            throw new UserManagerException(String.valueOf(Response.Status.CONFLICT));
+        }
+    }
+
+    @POST
+    @Path("/employee")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void add(Employee employee) throws UserManagerException {
+        try {
+            this.userManager.add(employee);
+        } catch (RepositoryException e) {
+            e.printStackTrace();
+            throw new UserManagerException(String.valueOf(Response.Status.CONFLICT));
+        }
+    }
+
+    @POST
+    @Path("/administrator")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void add(Administrator administrator) throws UserManagerException {
+        try {
+            this.userManager.add(administrator);
+        } catch (RepositoryException e) {
+            e.printStackTrace();
+            throw new UserManagerException(String.valueOf(Response.Status.CONFLICT));
+        }
+    }
 
     @GET
     @Path("client/{uuid}")
@@ -109,7 +109,7 @@ public class UserService {
         UUID userUuid = UUID.fromString(uuid);
         User storedUser = userManager.getUserByUUID(userUuid);
         Administrator storedAdmin = null;
-        if (storedUser instanceof Client)
+        if (storedUser instanceof Administrator)
             storedAdmin = (Administrator) storedUser;
 
         if (null == storedAdmin) {
@@ -118,6 +118,25 @@ public class UserService {
         return Response.ok()
                 .entity(storedAdmin)
                 .tag(EntityIdentitySignerVerifier.calculateEntitySignature(storedAdmin))
+                .build();
+    }
+
+    @GET
+    @Path("employee/{uuid}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findEmployeeByUuid(@PathParam("uuid") String uuid) throws Exception {
+        UUID userUuid = UUID.fromString(uuid);
+        User storedUser = userManager.getUserByUUID(userUuid);
+        Employee storedEmployee = null;
+        if (storedUser instanceof Employee)
+            storedEmployee = (Employee) storedUser;
+
+        if (null == storedEmployee) {
+            throw new Exception("Not found");
+        }
+        return Response.ok()
+                .entity(storedEmployee)
+                .tag(EntityIdentitySignerVerifier.calculateEntitySignature(storedEmployee))
                 .build();
     }
 
@@ -173,32 +192,32 @@ public class UserService {
 
     }
 
-//    @PUT
-//    @Path("/employee")
-//    @Consumes({MediaType.APPLICATION_JSON})
-//    public void update(Employee employee) throws UserManagerException {
-//
-//        try {
-//            this.userManager.update(employee.getUuid(), employee);
-//        } catch (RepositoryException e) {
-//            e.printStackTrace();
-//            throw new UserManagerException(String.valueOf(Response.Status.CONFLICT));
-//        }
-//
-//    }
-//
-//    @PUT
-//    @Path("/administrator")
-//    @Consumes({MediaType.APPLICATION_JSON})
-//    public void update(Administrator administrator) throws UserManagerException {
-//        try {
-//            this.userManager.update(administrator.getUuid(), administrator);
-//        } catch (RepositoryException e) {
-//            e.printStackTrace();
-//            throw new UserManagerException(String.valueOf(Response.Status.CONFLICT));
-//        }
-//    }
-//
+    @PUT
+    @Path("employee/{uuid}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @EntitySignatureValidatorFilterBinding
+    public void updateEmployee(@PathParam("uuid") String uuid, @HeaderParam("If-Match") @NotNull @NotEmpty String tagValue, Employee employee) throws Exception {
+        if (!EntityIdentitySignerVerifier.verifyEntityIntegrity(tagValue, employee)) {
+            throw new Exception("Integrity broken");
+        }
+        UUID userUuid = UUID.fromString(uuid);
+        User storedUser = this.userManager.getUserByUUID(userUuid);
+        Employee storedEmployee = null;
+
+        if (storedUser instanceof Employee)
+            storedEmployee = (Employee) storedUser;
+
+        if (null == storedEmployee) {
+            throw new Exception("Not found");
+        }
+
+//        client // todo check fields
+
+        this.userManager.update(userUuid, employee);
+
+    }
+
+
 
 //    @DELETE  // todo remove this function
 //    @Path("{uuid}")

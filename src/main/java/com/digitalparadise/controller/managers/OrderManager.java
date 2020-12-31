@@ -107,12 +107,12 @@ public class OrderManager implements IManager<Order, UUID> {
         return this.orderRepository.getResourceByUUID(uuid);
     }
 
-    public List<Order> getAllOrdersForTheUser(User user) {
+    public List<Order> getAllOrdersForTheEmail(String userEmail) {
+
         List<Order> orders = new CopyOnWriteArrayList<>();
         for (Order order : this.orderRepository.getAll()) {
-            if (order.getClient().getUuid().equals(user.getUuid())) {
+            if (order.getClient().getEmail().equals(userEmail)) {
                 orders.add(order);
-                System.out.println(order);
             }
         }
         return orders;

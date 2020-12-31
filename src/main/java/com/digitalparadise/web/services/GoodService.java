@@ -125,7 +125,6 @@ public class GoodService {
             return Response.status(422).build();
         }
 
-
     }
 
     @PUT
@@ -187,6 +186,9 @@ public class GoodService {
             e.printStackTrace();
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-
     }
+
+
+
+
 }

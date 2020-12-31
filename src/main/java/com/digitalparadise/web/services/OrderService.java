@@ -2,10 +2,12 @@ package com.digitalparadise.web.services;
 
 import com.digitalparadise.controller.exceptions.ManagerException;
 import com.digitalparadise.controller.exceptions.repository.RepositoryException;
+import com.digitalparadise.controller.exceptions.repository.UserRepositoryException;
 import com.digitalparadise.controller.managers.GoodManager;
 import com.digitalparadise.controller.managers.OrderManager;
 import com.digitalparadise.model.entities.Good;
 import com.digitalparadise.model.entities.Order;
+import com.digitalparadise.model.entities.User;
 import com.digitalparadise.model.goods.Laptop;
 import com.digitalparadise.model.goods.PC;
 import com.digitalparadise.web.filters.EntitySignatureValidatorFilterBinding;
@@ -14,8 +16,10 @@ import com.digitalparadise.web.utils.EntityIdentitySignerVerifier;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,6 +33,19 @@ public class OrderService {
     @Produces({MediaType.APPLICATION_JSON})
     public List<Order> getAll() {
         return orderManager.getAll();
+    }
+
+    @GET
+    @Path("_self")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findSelf(@Context SecurityContext securityContext) {
+
+        String userEmail = securityContext.getUserPrincipal().getName();
+
+        List<Order> storedUserOrders =  orderManager.getAllOrdersForTheEmail(userEmail);
+
+        return Response.ok().entity(storedUserOrders).build();
+
     }
 
     @GET
@@ -55,6 +72,7 @@ public class OrderService {
 
     @POST
     @Path("/order") // todo should we create the similar function for get method with /laptop/{uuid} path ???
+                            // todo user uuid, goods uuids
     @Consumes({MediaType.APPLICATION_JSON})
     public Response add(Order order) throws ManagerException {
         if (order.getOrderDateTime() == null || order.getClient() == null || order.getGoods() == null) {
@@ -68,8 +86,6 @@ public class OrderService {
         }
 
     }
-
-
 
 
     @PUT

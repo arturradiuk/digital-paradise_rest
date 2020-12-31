@@ -44,8 +44,5 @@ public class Laptop extends Computer {
         this.usbAmount = usbAmount;
     }
 
-    public Double getPrice() {
-        return getBasePrice() + screenSize * 10 + usbAmount * 100 + (hasCamera ? 200 : 0);
-    }
 
 }

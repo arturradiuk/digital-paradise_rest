@@ -43,6 +43,7 @@ public class CustomJWTAuthenticationMechanism implements HttpAuthenticationMecha
                String login = jwtToken.getJWTClaimsSet().getSubject();
                String groups = jwtToken.getJWTClaimsSet().getStringClaim("auth");
                Date expirationTime = (Date) (jwtToken.getJWTClaimsSet().getClaim("exp"));
+
                boolean tokenExpired = new Date().after(expirationTime);
 
                if(new Date().after(expirationTime)){
@@ -54,7 +55,8 @@ public class CustomJWTAuthenticationMechanism implements HttpAuthenticationMecha
                return httpMessageContext.responseUnauthorized();
            }
        }
-        return null;
+
+        return httpMessageContext.responseUnauthorized();
     }
 
 }

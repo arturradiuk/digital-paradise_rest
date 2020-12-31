@@ -7,10 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.json.bind.annotation.JsonbCreator;
-import javax.json.bind.annotation.JsonbNillable;
-import javax.json.bind.annotation.JsonbProperty;
-import javax.json.bind.annotation.JsonbTypeAdapter;
+import javax.json.bind.annotation.*;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Objects;
@@ -25,6 +22,7 @@ import java.util.UUID;
 public abstract class User implements Serializable, SignableEntity {
 
 
+    @JsonbTransient
     @Override
     public String getSignablePayload() { //todo change returning type to the UUID
         return this.uuid.toString();

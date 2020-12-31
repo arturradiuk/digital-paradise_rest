@@ -1,11 +1,15 @@
 package com.digitalparadise.model.entities;
 
 import com.digitalparadise.controller.exceptions.OrderException;
+import com.digitalparadise.web.SignableEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import com.digitalparadise.model.clients.Client;
 
+import javax.json.bind.annotation.JsonbProperty;
+import javax.json.bind.annotation.JsonbTransient;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +20,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class Order {
+public class Order implements Serializable, SignableEntity {
     private UUID uuid;
     private LocalDateTime orderDateTime;
     private List<Good> goods = new ArrayList<Good>();
@@ -31,7 +35,10 @@ public class Order {
         this.client = client;
     }
 
-    public Order(UUID uuid, LocalDateTime orderDateTime, List<Good> goods, Client client) throws OrderException {
+    public Order(@JsonbProperty("uuid") UUID uuid,
+                 @JsonbProperty("orderDataTime") LocalDateTime orderDateTime,
+                 @JsonbProperty("goods") List<Good> goods,
+                 @JsonbProperty("client") Client client) throws OrderException {
         if (uuid == null || orderDateTime == null || goods == null || client == null)
             throw new OrderException(OrderException.NULL_FIELD);
 
@@ -66,5 +73,11 @@ public class Order {
     @Override
     public int hashCode() {
         return Objects.hash(uuid);
+    }
+
+    @JsonbTransient
+    @Override
+    public String getSignablePayload() {
+        return this.uuid.toString();
     }
 }

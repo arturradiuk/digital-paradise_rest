@@ -16,8 +16,8 @@ import javax.json.bind.annotation.JsonbProperty;
 @ToString(callSuper = true)
 @JsonbNillable(value = true)
 public abstract class Computer extends Good {
-    private int ram;
-    private int ssdCapacity;
+    private Integer ram;
+    private Integer ssdCapacity;
 
     public Computer() {
         super();
@@ -41,7 +41,7 @@ public abstract class Computer extends Good {
     }
 
     @Override
-    public double getBasePrice() {
+    public Double getBasePrice() {
         return super.getBasePrice() + (this.ram / 1024.0) * 50 + (ssdCapacity / 1024.0) * 150;
     }
 

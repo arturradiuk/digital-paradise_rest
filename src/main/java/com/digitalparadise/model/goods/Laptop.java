@@ -15,9 +15,9 @@ import javax.json.bind.annotation.JsonbProperty;
 @ToString(callSuper = true)
 @JsonbNillable(value = true)
 public class Laptop extends Computer {
-    private double screenSize;
-    private boolean hasCamera;
-    private int usbAmount;
+    private Double screenSize;
+    private Boolean hasCamera;
+    private Integer usbAmount;
 
     public Laptop() {
         super();
@@ -44,7 +44,7 @@ public class Laptop extends Computer {
         this.usbAmount = usbAmount;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return getBasePrice() + screenSize * 10 + usbAmount * 100 + (hasCamera ? 200 : 0);
     }
 

@@ -195,7 +195,7 @@ public class UserService {
             return Response.status(204).build();
         } catch (RepositoryException e) {
             e.printStackTrace();
-            return Response.status(422).build();
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
 
     }
@@ -239,7 +239,7 @@ public class UserService {
             return Response.status(204).build();
         } catch (RepositoryException e) {
             e.printStackTrace();
-            return Response.status(422).build();
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
 
@@ -282,7 +282,7 @@ public class UserService {
             return Response.status(204).build();
         } catch (RepositoryException e) {
             e.printStackTrace();
-            return Response.status(422).build();
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
 

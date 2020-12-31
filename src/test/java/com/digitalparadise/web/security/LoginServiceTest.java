@@ -31,6 +31,8 @@ public class LoginServiceTest {
     @Test
     public void clientUnSuccessfulSignUp(){
 //      http --verify=no -v POST https://localhost:8181/digital-paradise/authenticate email=Tola@gmail.com password=haslo
+//       
+
         RestAssured.baseURI = "https://localhost:8181/digital-paradise";
         RequestSpecification request = RestAssured.given();
         request.relaxedHTTPSValidation(); // --verify=no

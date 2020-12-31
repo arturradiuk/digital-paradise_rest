@@ -40,11 +40,5 @@ public abstract class Computer extends Good {
         this.ssdCapacity = ssdCapacity;
     }
 
-    @Override
-    public Double getBasePrice() {
-        return super.getBasePrice() + (this.ram / 1024.0) * 50 + (ssdCapacity / 1024.0) * 150;
-    }
-
-
 
 }

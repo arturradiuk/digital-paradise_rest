@@ -265,17 +265,13 @@ public class UserService {
         }
 
         try {
-
             User storedUser = userManager.getUserByUUID(userUuid);
             if (!(storedUser instanceof Employee))
                 return Response.status(Response.Status.NOT_FOUND).build();
-
         } catch (RepositoryException e) {
             e.printStackTrace();
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-
-
 
         try {
             this.userManager.update(userUuid, employee);

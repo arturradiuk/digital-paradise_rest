@@ -7,6 +7,7 @@ import lombok.*;
 import javax.json.bind.annotation.JsonbCreator;
 import javax.json.bind.annotation.JsonbNillable;
 import javax.json.bind.annotation.JsonbProperty;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.ws.rs.GET;
 import java.io.Serializable;
 import java.util.Objects;
@@ -20,6 +21,7 @@ import java.util.UUID;
 public abstract class Good implements Serializable, SignableEntity {
 
 
+    @JsonbTransient
     @Override
     public String getSignablePayload() {
         return uuid.toString();

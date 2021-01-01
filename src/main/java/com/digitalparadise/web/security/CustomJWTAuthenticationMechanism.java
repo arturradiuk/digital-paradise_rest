@@ -42,11 +42,13 @@ public class CustomJWTAuthenticationMechanism implements HttpAuthenticationMecha
                SignedJWT jwtToken = SignedJWT.parse(jwtSerializedToken);
                String login = jwtToken.getJWTClaimsSet().getSubject();
                String groups = jwtToken.getJWTClaimsSet().getStringClaim("auth");
+
+
                Date expirationTime = (Date) (jwtToken.getJWTClaimsSet().getClaim("exp"));
 
                boolean tokenExpired = new Date().after(expirationTime);
 
-               if(new Date().after(expirationTime)){
+               if(tokenExpired){
                    return httpMessageContext.responseUnauthorized();
                }
 

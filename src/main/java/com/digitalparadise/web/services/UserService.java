@@ -27,7 +27,7 @@ public class UserService {
 
 
     @Inject
-    UserManager userManager = new UserManager();
+    UserManager userManager ;
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
@@ -286,7 +286,9 @@ public class UserService {
     @POST
     @Path("/client")
     @Consumes({MediaType.APPLICATION_JSON})
+
     public Response add(Client client) {
+
 
         if (client.getActive() == null || client.getName() == null || client.getPassword() == null || client.getEmail() == null  || client.getPhoneNumber() == null || client.getAddress() == null) {
             return Response.status(422).build();

@@ -43,13 +43,13 @@ public class Employee extends User {
 //    }
 
 //    @JsonbCreator
-    public Employee(@JsonbProperty("uuid") UUID uuid,
+    public Employee(
                     @JsonbProperty("email") String email,
                     @JsonbProperty("name") String name,
                     @JsonbProperty("address") Address address,
                     @JsonbProperty("earnings") Float earnings,
                     @JsonbProperty("password") String password) throws UserException {
-        super(uuid, email, name, address, password);
+        super( email, name, address, password);
 
         if (earnings == null)
             throw new EmployeeException(EmployeeException.NULL_FIELD);

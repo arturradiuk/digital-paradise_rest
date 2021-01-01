@@ -1,10 +1,13 @@
 package com.digitalparadise.web.services;
 
 import com.digitalparadise.controller.exceptions.ManagerException;
+import com.digitalparadise.controller.exceptions.OrderException;
 import com.digitalparadise.controller.exceptions.repository.RepositoryException;
 import com.digitalparadise.controller.exceptions.repository.UserRepositoryException;
 import com.digitalparadise.controller.managers.GoodManager;
 import com.digitalparadise.controller.managers.OrderManager;
+import com.digitalparadise.controller.managers.UserManager;
+import com.digitalparadise.model.clients.Client;
 import com.digitalparadise.model.entities.Good;
 import com.digitalparadise.model.entities.Order;
 import com.digitalparadise.model.entities.User;
@@ -12,14 +15,20 @@ import com.digitalparadise.model.goods.Laptop;
 import com.digitalparadise.model.goods.PC;
 import com.digitalparadise.web.filters.EntitySignatureValidatorFilterBinding;
 import com.digitalparadise.web.utils.EntityIdentitySignerVerifier;
+import com.nimbusds.jose.shaded.json.JSONArray;
+import com.nimbusds.jose.shaded.json.JSONObject;
+import com.nimbusds.jose.shaded.json.parser.JSONParser;
+import com.nimbusds.jose.shaded.json.parser.ParseException;
 
 import javax.inject.Inject;
+import javax.json.bind.annotation.JsonbProperty;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,7 +36,13 @@ import java.util.UUID;
 @Path(value = "/orders")
 public class OrderService {
     @Inject
-    OrderManager orderManager = new OrderManager();
+    OrderManager orderManager;
+
+    @Inject
+    UserManager userManager;
+
+    @Inject
+    GoodManager goodManager;
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
@@ -42,7 +57,7 @@ public class OrderService {
 
         String userEmail = securityContext.getUserPrincipal().getName();
 
-        List<Order> storedUserOrders =  orderManager.getAllOrdersForTheEmail(userEmail);
+        List<Order> storedUserOrders = orderManager.getAllOrdersForTheEmail(userEmail);
 
         return Response.ok().entity(storedUserOrders).build();
 
@@ -72,19 +87,61 @@ public class OrderService {
 
     @POST
     @Path("/order") // todo should we create the similar function for get method with /laptop/{uuid} path ???
-                            // todo user uuid, goods uuids
+    // todo user uuid, goods uuids
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response add(Order order) throws ManagerException {
-        if (order.getOrderDateTime() == null || order.getClient() == null || order.getGoods() == null) {
-            return Response.status(422).build();
-        }
+//    public Response add(@Context SecurityContext securityContext, ArrayList<String> goodsStr) throws ManagerException {
+    public Response add(@Context SecurityContext securityContext, String goodsStr) {
+
+        JSONObject jsonObject = null;
         try {
-            this.orderManager.add(order);
-            return Response.status(201).build();
-        } catch (RepositoryException e) {
-            return Response.status(409).build();
+            JSONParser jsonParser = new JSONParser();
+            jsonObject = (JSONObject) jsonParser.parse(goodsStr);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
+
+        JSONArray jsonArray = (JSONArray) jsonObject.get("goodsStr");
+        List<String> goodsUuidStrList = new ArrayList<>();
+
+        for (int i = 0; i < jsonArray.size(); i++) {
+            goodsUuidStrList.add((String) jsonArray.get(i));
+        }
+
+        Client client = null;
+        try {
+            User storedUser = userManager.findByEmail(securityContext.getUserPrincipal().getName());
+            if (!(storedUser instanceof Client)) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+            client = (Client) storedUser;
+        } catch (UserRepositoryException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        if (goodsUuidStrList.size() == 0)
+            return Response.status(422).build();
+
+        List<Good> goods = null;
+        try {
+            goods = this.goodManager.getGoods(goodsUuidStrList);
+        } catch (RepositoryException | IllegalArgumentException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        if (goods.size() == 0) {
+            return Response.status(422).build();
+        }
+
+        try {
+            this.orderManager.createOrder(this.goodManager, goods, client);
+            return Response.ok().build();
+        } catch (OrderException | RepositoryException | ManagerException e) {
+            e.printStackTrace();
+            return Response.status(422).build();
+        }
     }
 
 

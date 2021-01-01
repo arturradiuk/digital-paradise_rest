@@ -16,3 +16,4 @@ public class SerializeStringToEmptyAdapter implements JsonbAdapter<String, JsonV
         return jsonValue.toString();
     }
 }
+

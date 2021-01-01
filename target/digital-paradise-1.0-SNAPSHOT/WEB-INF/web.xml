@@ -53,13 +53,17 @@
     <security-constraint>
         <display-name>EmployeeResources</display-name>
         <web-resource-collection>
-            <web-resource-name>EmployeeResources</web-resource-name>
+            <web-resource-name>EmployeeGoodsResources</web-resource-name>
             <url-pattern>/goods/*</url-pattern>
-            <url-pattern>/orders/*</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
             <http-method>PUT</http-method>
             <http-method>DELETE</http-method>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>EmployeeOrdersResources</web-resource-name>
+            <url-pattern>/orders/*</url-pattern>
+            <http-method>GET</http-method>
         </web-resource-collection>
         <auth-constraint>
             <role-name>EMPLOYEE</role-name>
@@ -81,10 +85,9 @@
 
         <web-resource-collection>
             <web-resource-name>ClientOrderResources</web-resource-name>
-            <url-pattern>/orders/</url-pattern>
+            <url-pattern>/orders/order</url-pattern>
             <http-method>POST</http-method>
         </web-resource-collection>
-
 
         <auth-constraint>
             <role-name>CLIENT</role-name>

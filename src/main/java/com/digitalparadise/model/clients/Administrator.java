@@ -35,13 +35,13 @@ public class Administrator extends User {
 //    }
 
 //    @JsonbCreator
-        public Administrator(@JsonbProperty("uuid") UUID uuid,
+        public Administrator(
                          @JsonbProperty("email") String email,
                          @JsonbProperty("name") String name,
                          @JsonbProperty("address") Address address,
                          @JsonbProperty("isHeadAdmin") Boolean isHeadAdmin,
                              @JsonbProperty("password") String password) throws UserException {
-        super(uuid, email, name, address,password);
+        super(email, name, address,password);
 
         if (isHeadAdmin == null)
             throw new AdminException(AdminException.NULL_FIELD);

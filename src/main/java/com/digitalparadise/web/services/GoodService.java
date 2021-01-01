@@ -24,7 +24,7 @@ import java.util.UUID;
 @Path(value = "/goods")
 public class GoodService {
     @Inject
-    GoodManager goodManager = new GoodManager();
+    GoodManager goodManager ; // todo check necessity
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})

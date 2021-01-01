@@ -12,6 +12,7 @@ import com.digitalparadise.model.repositories.Repository;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,6 +25,14 @@ public class GoodManager implements IManager<Good, UUID> {
     @Inject
     private Repository<Good, UUID> goodRepository; // = new GoodRepository();
 
+
+    public List<Good> getGoods(List<String> goodsUuid) throws RepositoryException {
+        List<Good> goods = new ArrayList<>();
+        for ( String uuid : goodsUuid) {
+            goods.add(this.getGoodByUUID(UUID.fromString(uuid)));
+        }
+        return goods;
+    }
 
     public Good getGoodByUUID(UUID uuid) throws RepositoryException {
         return this.goodRepository.getResourceByUUID(uuid);

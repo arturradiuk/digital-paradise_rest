@@ -51,9 +51,6 @@ public class UserServiceTest {
 //        request = RestAssured.given();
 //        request.relaxedHTTPSValidation(); // --verify=no
 
-
-
-
     }
 
     @Test
@@ -61,10 +58,13 @@ public class UserServiceTest {
 
     }
 
+
+
     @Test
     public void adminAccessTest(){
 
     }
+
 
 
     @Test(enabled = false)

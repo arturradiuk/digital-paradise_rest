@@ -52,6 +52,7 @@ public class OrderManager implements IManager<Order, UUID> {
         return orders;
     }
 
+
     public Order createOrder(GoodManager goodManager, List<Good> goods, Client client) throws OrderException, RepositoryException, ManagerException {
         boolean exists = false;
 

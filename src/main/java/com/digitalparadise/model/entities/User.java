@@ -69,7 +69,7 @@ public abstract class User implements Serializable, SignableEntity {
 
 
     @JsonbCreator
-    public User(@JsonbProperty("uuid") UUID uuid,
+    public User(
                 @JsonbProperty("email") String email,
                 @JsonbProperty("name") String name,
                 @JsonbProperty("address") Address address,

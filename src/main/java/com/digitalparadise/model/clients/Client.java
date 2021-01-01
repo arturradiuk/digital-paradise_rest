@@ -41,13 +41,13 @@ public class Client extends User{
 //        this.active = true;
 //    }
 
-    public Client(@JsonbProperty("uuid") UUID uuid,
+    public Client(
                   @JsonbProperty("email") String email,
                   @JsonbProperty("name") String name,
                   @JsonbProperty("address") Address address,
                   @JsonbProperty("phoneNumber") String phoneNumber,
                   @JsonbProperty("password") String password) throws UserException {
-        super(uuid, email, name, address, password);
+        super(email, name, address, password);
 
 //        if (phoneNumber == null)
 //            throw new ClientException(ClientException.NULL_FIELD);

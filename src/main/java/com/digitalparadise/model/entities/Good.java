@@ -35,6 +35,8 @@ public abstract class Good implements Serializable, SignableEntity {
     private String goodName;
     @JsonbProperty
     private Double basePrice;
+
+//    @JsonbTransient // todo remove comment here
     @JsonbProperty
     private Integer count;
 

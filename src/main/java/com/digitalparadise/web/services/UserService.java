@@ -98,9 +98,9 @@ public class UserService {
 
         } catch (RepositoryException e) {
             e.printStackTrace();
-        } finally {
-            return Response.status(Response.Status.NOT_FOUND).build();
         }
+        return Response.status(Response.Status.NOT_FOUND).build();
+
     }
 
     @GET
@@ -126,9 +126,9 @@ public class UserService {
 
         } catch (RepositoryException e) {
             e.printStackTrace();
-        } finally {
-            return Response.status(Response.Status.NOT_FOUND).build();
         }
+            return Response.status(Response.Status.NOT_FOUND).build();
+
     }
 
     @GET
@@ -151,9 +151,9 @@ public class UserService {
 
         } catch (RepositoryException e) {
             e.printStackTrace();
-        } finally {
-            return Response.status(Response.Status.NOT_FOUND).build();
         }
+        return Response.status(Response.Status.NOT_FOUND).build();
+
     }
 
 
@@ -241,6 +241,7 @@ public class UserService {
             e.printStackTrace();
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+
     }
 
     @PUT

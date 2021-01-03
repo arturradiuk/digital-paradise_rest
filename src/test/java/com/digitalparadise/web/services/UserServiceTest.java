@@ -87,7 +87,7 @@ public class UserServiceTest {
         requestParams.put("password", "123");
 
         request.header("Content-Type", "application/json");
-        request.body(requestParams.toJSONString());
+
 
         Response response = request.post("https://localhost:8181/digital-paradise/authenticate");
 
@@ -121,6 +121,7 @@ public class UserServiceTest {
         requestParams.put("password", "123");
 
         request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
 
         Response response = request.post("https://localhost:8181/digital-paradise/authenticate");
 
@@ -134,11 +135,11 @@ public class UserServiceTest {
         request.header(new Header("Authorization","Bearer " + jwt) );
 
         response = request.get(new URI("https://localhost:8181/digital-paradise/users/_self"));
-        System.out.println(response.getBody().asString());
+        System.out.println(response.getBody().print());
 
         String result = "{\"address\":{\"number\":\"32\",\"street\":\"High Street\"},\"email\":" +
-                "\"Lolek@gmail.com\",\"name\":\"Lolek\",\"password\":\"\",\"uuid\":" +
-                "\"2d6b6bd5-be82-3a41-87ac-5cd1b3b24756\",\"active\":true,\"phoneNumber\":\"672817289\"}";
+                "\"TolaEmployee@gmail.com\",\"name\":\"TolaEmployee\",\"password\":\"\",\"uuid\":" +
+                "\"4d6b6bd5-be82-3a41-87ac-5cd1b3b24756\",\"earnings\":2800.0}";
 
         Assert.assertEquals(response.statusCode(), javax.ws.rs.core.Response.Status.OK.getStatusCode());
         Assert.assertEquals(response.getHeader("Content-Type"),"application/json");

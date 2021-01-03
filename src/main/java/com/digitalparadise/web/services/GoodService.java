@@ -62,6 +62,11 @@ public class GoodService {
                 laptop.getScreenSize() == null || laptop.getUsbAmount() == null || laptop.getHasCamera() == null) {
             return Response.status(422).build();
         }
+
+        if(laptop.getSold() && (laptop.getCount() != 0)) {
+            return Response.status(409).build();
+        }
+
         try {
             this.goodManager.add(laptop);
             return Response.status(201).build();
@@ -79,6 +84,8 @@ public class GoodService {
         if (pc.getSold() == null || pc.getGoodName() == null || pc.getBasePrice() == null || pc.getCount() == null) {
             return Response.status(422).build();
         }
+
+
         try {
             this.goodManager.add(pc);
             return Response.status(201).build();
@@ -98,6 +105,9 @@ public class GoodService {
         }
         if (!EntityIdentitySignerVerifier.verifyEntityIntegrity(tagValue, laptop)) {
             return Response.status(406).build();
+        }
+        if(laptop.getSold() && (laptop.getCount() != 0)) {
+            return Response.status(409).build();
         }
 
         UUID goodUuid = null;

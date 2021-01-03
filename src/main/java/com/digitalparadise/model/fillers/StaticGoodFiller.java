@@ -55,6 +55,10 @@ public class StaticGoodFiller implements DataFiller {
             temp.setUuid(UUID.fromString("84a6b7cc-bd4c-3022-83d0-d2af506bfb2b"));
             goods.add(temp);
 
+            temp = new PC(150, "Samsung pc", 16, 256, 0);
+            temp.setUuid(UUID.fromString("94a6b7cc-bd4c-3022-83d0-d2af506bfb2b"));
+            goods.add(temp);
+
         } catch (GoodException e) {
             e.printStackTrace();
         }

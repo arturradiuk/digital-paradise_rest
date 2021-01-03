@@ -32,6 +32,18 @@
     </security-constraint>
 
     <security-constraint>
+        <display-name>PublicResources</display-name>
+        <web-resource-collection>
+            <web-resource-name>PublicResources</web-resource-name>
+            <url-pattern>/tests</url-pattern>
+            <http-method>GET</http-method>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <security-constraint>
         <display-name>AdministratorResources</display-name>
         <web-resource-collection>
             <web-resource-name>AdministratorResources</web-resource-name>

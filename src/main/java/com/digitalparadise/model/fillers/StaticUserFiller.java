@@ -37,6 +37,12 @@ public class StaticUserFiller implements DataFiller { // todo rename to people f
 //            temp.setUuid(UUID.nameUUIDFromBytes(new String("3234567890_person").getBytes()));
             temp.setUuid(UUID.fromString("3d6b6bd5-be82-3a41-87ac-5cd1b3b24756"));
             people.add(temp);
+
+            temp = new Client("Zbigniew@gmail.com", "Zbigniew", address,"672817289","123");
+//            temp.setUuid(UUID.nameUUIDFromBytes(new String("3234567890_person").getBytes()));
+            temp.setUuid(UUID.fromString("106b6bd5-be82-3a41-87ac-5cd1b3b24756"));
+            temp.changeActivity();
+            people.add(temp);
 //
             
             temp = new Employee("TolaEmployee@gmail.com", "TolaEmployee", address, (float) 2800,"123");

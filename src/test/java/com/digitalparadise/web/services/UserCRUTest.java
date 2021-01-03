@@ -51,8 +51,8 @@ public class UserCRUTest {
                 "        \"number\": \"32\",\n" +
                 "        \"street\": \"High Street\"\n" +
                 "    },\n" +
-                "    \"email\": \"Pawel@gmail.com\",\n" +
-                "    \"name\": \"Lolek\",\n" +
+                "    \"email\": \"Magda@gmail.com\",\n" +
+                "    \"name\": \"Magda\",\n" +
                 "    \"password\": \"123\",\n" +
                 "    \"active\": true,\n" +
                 "    \"phoneNumber\": \"672817289\"\n" +
@@ -70,7 +70,7 @@ public class UserCRUTest {
         Response responseRead = requestRead.get(new URI("https://localhost:8181/digital-paradise/users"));
         String body = responseRead.getBody().asString();
         Assert.assertEquals(responseRead.statusCode(),javax.ws.rs.core.Response.Status.OK.getStatusCode());
-        Assert.assertTrue(body.contains("Pawel@gmail.com"));
+        Assert.assertTrue(body.contains("Magda@gmail.com"));
 
     }
     @Test

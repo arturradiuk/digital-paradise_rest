@@ -83,10 +83,11 @@ public class UserServiceTest {
         request.relaxedHTTPSValidation(); // --verify=no
 
         JSONObject requestParams = new JSONObject();
-        requestParams.put("email", "Lolek@gmail.com");
+        requestParams.put("email", "Bolek@gmail.com");
         requestParams.put("password", "123");
 
         request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
 
 
         Response response = request.post("https://localhost:8181/digital-paradise/authenticate");
@@ -102,9 +103,9 @@ public class UserServiceTest {
 
         response = request.get(new URI("https://localhost:8181/digital-paradise/users/_self"));
 
-        String result = "{\"address\":{\"number\":\"32\",\"street\":\"High Street\"},\"email\":" +
-                "\"Lolek@gmail.com\",\"name\":\"Lolek\",\"password\":\"\",\"uuid\":" +
-                "\"2d6b6bd5-be82-3a41-87ac-5cd1b3b24756\",\"active\":true,\"phoneNumber\":\"672817289\"}";
+        String result = "{\"address\":{\"number\":\"32\",\"street\":\"High Street\"},\"email\":\"Bolek@gmail.com\"," +
+                "\"name\":\"Bolek\",\"password\":\"\",\"uuid\":\"3d6b6bd5-be82-3a41-87ac-5cd1b3b24756\",\"active\":" +
+                "true,\"phoneNumber\":\"672817289\"}";
 
         Assert.assertEquals(response.statusCode(), javax.ws.rs.core.Response.Status.OK.getStatusCode());
         Assert.assertEquals(response.getHeader("Content-Type"),"application/json");
@@ -135,7 +136,7 @@ public class UserServiceTest {
         request.header(new Header("Authorization","Bearer " + jwt) );
 
         response = request.get(new URI("https://localhost:8181/digital-paradise/users/_self"));
-        System.out.println(response.getBody().print());
+
 
         String result = "{\"address\":{\"number\":\"32\",\"street\":\"High Street\"},\"email\":" +
                 "\"TolaEmployee@gmail.com\",\"name\":\"TolaEmployee\",\"password\":\"\",\"uuid\":" +
@@ -174,8 +175,8 @@ public class UserServiceTest {
         response = request.get(new URI("https://localhost:8181/digital-paradise/users/_self"));
 
         String result = "{\"address\":{\"number\":\"32\",\"street\":\"High Street\"},\"email\":" +
-                "\"Lolek@gmail.com\",\"name\":\"Lolek\",\"password\":\"\",\"uuid\":" +
-                "\"2d6b6bd5-be82-3a41-87ac-5cd1b3b24756\",\"active\":true,\"phoneNumber\":\"672817289\"}";
+                "\"TolaAdministrator@gmail.com\",\"name\":\"TolaAdministrator\",\"password\":\"\",\"uuid\":" +
+                "\"7d6b6bd5-be82-3a41-87ac-5cd1b3b24756\",\"isHeadAdmin\":true}";
 
         Assert.assertEquals(response.statusCode(), javax.ws.rs.core.Response.Status.OK.getStatusCode());
         Assert.assertEquals(response.getHeader("Content-Type"),"application/json");

@@ -117,14 +117,13 @@ public class GoodCRUDTest {
     public void deleteGoodTest() throws URISyntaxException {
         String token = getEmployeeToken();
 
-
         RequestSpecification requestGet = RestAssured.given();
         requestGet.relaxedHTTPSValidation();
         requestGet.header(new Header("Authorization", "Bearer " + token));
-        Response responseGet = requestGet.get(new URI("https://localhost:8181/digital-paradise/goods/14a6b7cc-bd4c-3022-83d0-d2af506bfb2b"));
+        Response responseGet = requestGet.get(new URI("https://localhost:8181/digital-paradise/goods/24a6b7cc-bd4c-3022-83d0-d2af506bfb2b"));
         String ETag = responseGet.getHeader("ETag").replace("\"", "");
         String body = responseGet.getBody().asString();
-        Assert.assertTrue(body.contains("Master Lenovo"));
+        Assert.assertTrue(body.contains("Apple"));
 
 
         RequestSpecification request = RestAssured.given();
@@ -133,8 +132,8 @@ public class GoodCRUDTest {
         request.header(new Header("Authorization", "Bearer " + token));
         request.header("If-Match", ETag);
         request.header("Content-Type", "application/json");
-        Response response = request.delete(new URI("https://localhost:8181/digital-paradise/goods/14a6b7cc-bd4c-3022-83d0-d2af506bfb2b"));
-        Assert.assertEquals(response.statusCode(), 201);
+        Response responseResult = request.delete(new URI("https://localhost:8181/digital-paradise/goods/24a6b7cc-bd4c-3022-83d0-d2af506bfb2b"));
+        Assert.assertEquals(responseResult.statusCode(), 201);
 
         RequestSpecification requestGetAll = RestAssured.given();
         requestGetAll.relaxedHTTPSValidation();
@@ -142,6 +141,6 @@ public class GoodCRUDTest {
         Response responseRead = requestGetAll.get(new URI("https://localhost:8181/digital-paradise/goods"));
         body = responseRead.getBody().asString();
         Assert.assertEquals(responseRead.statusCode(), javax.ws.rs.core.Response.Status.OK.getStatusCode());
-        Assert.assertFalse(body.contains("Master Lenovo"));
+        Assert.assertFalse(body.contains("Apple"));
     }
 }

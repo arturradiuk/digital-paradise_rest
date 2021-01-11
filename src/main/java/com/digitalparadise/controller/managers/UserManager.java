@@ -80,4 +80,14 @@ public class UserManager implements IManager<User, UUID> {
     public User findByEmail(String email) throws UserRepositoryException {
         return ((UserRepository) this.userRepository).getResourceByEmail(email);
     }
+
+    public boolean isClientActive(String email) {
+        for (User u : this.userRepository.getAll()) {
+            if (u instanceof Client
+                    && !((Client) u).getActive()
+                    && ((Client) u).getEmail().equals(email))
+                return false;
+        }
+        return true;
+    }
 }

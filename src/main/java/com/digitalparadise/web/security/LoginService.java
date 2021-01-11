@@ -1,7 +1,10 @@
 package com.digitalparadise.web.security;
 
 
+import com.digitalparadise.controller.managers.UserManager;
 import com.digitalparadise.web.utils.JWTGeneratorVerifier;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -21,11 +24,14 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.text.ParseException;
 import java.util.logging.Logger;
 
 @RequestScoped
 @Path("authenticate")
 public class LoginService {
+    @Inject
+    private UserManager userManager;
 
     public LoginService() {
 
@@ -59,7 +65,15 @@ public class LoginService {
     public Response updateToken(@Context HttpServletRequest httpServletRequest) {
         String authorizationHeader = httpServletRequest.getHeader(CustomJWTAuthenticationMechanism.AUTHORIZATION_HEADER);
         String jwtSerializedToken = authorizationHeader.substring((CustomJWTAuthenticationMechanism.BEARER.length())).trim();
-
+        String userEmail = null;
+        try {
+            userEmail = SignedJWT.parse(jwtSerializedToken).getJWTClaimsSet().getSubject();
+            if (!this.userManager.isClientActive(userEmail))
+                return Response.status(403).build();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return Response.status(403).build();
+        }
         return Response.accepted()
                 .type("application/jwt")
                 .entity(JWTGeneratorVerifier.generateJWTStringBasedOnJWTString(jwtSerializedToken))

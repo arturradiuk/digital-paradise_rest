@@ -103,13 +103,8 @@ public class UserServiceTest {
 
         response = request.get(new URI("https://localhost:8181/digital-paradise/users/_self"));
 
-        String result = "{\"address\":{\"number\":\"32\",\"street\":\"High Street\"},\"email\":\"Bolek@gmail.com\"," +
-                "\"name\":\"Bolek\",\"password\":\"\",\"uuid\":\"3d6b6bd5-be82-3a41-87ac-5cd1b3b24756\",\"active\":" +
-                "true,\"phoneNumber\":\"672817289\"}";
-
         Assert.assertEquals(response.statusCode(), javax.ws.rs.core.Response.Status.OK.getStatusCode());
         Assert.assertEquals(response.getHeader("Content-Type"),"application/json");
-        Assert.assertEquals(response.getBody().asString(), result);
     }
 
     @Test

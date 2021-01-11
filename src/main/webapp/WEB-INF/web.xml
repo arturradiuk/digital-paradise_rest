@@ -120,6 +120,12 @@
             <http-method>GET</http-method>
         </web-resource-collection>
 
+        <web-resource-collection>
+            <web-resource-name>AuthenticatedUserResources_update-token</web-resource-name>
+            <url-pattern>/authenticate/token-update</url-pattern>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+
         <auth-constraint>
             <role-name>ADMIN</role-name>
             <role-name>CLIENT</role-name>

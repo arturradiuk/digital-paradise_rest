@@ -35,7 +35,9 @@
         <display-name>PublicResources</display-name>
         <web-resource-collection>
             <web-resource-name>PublicResources</web-resource-name>
+<!--                                                        todo check necessity-->
             <url-pattern>/tests</url-pattern>
+
             <http-method>GET</http-method>
         </web-resource-collection>
         <user-data-constraint>

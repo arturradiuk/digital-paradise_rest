@@ -194,7 +194,7 @@ public class SecurityTests {
         request.header("Content-Type", "application/json");
         request.body(requestParams.toJSONString());
         Response response = request.put(new URI("https://localhost:8181/digital-paradise/users/client/2d6b6bd5-be82-3a41-87ac-5cd1b3b24756"));
-        Assert.assertEquals(response.statusCode(),406);
+        Assert.assertEquals(response.statusCode(),412);
 
     }
 
@@ -230,7 +230,7 @@ public class SecurityTests {
         request.header("Content-Type", "application/json");
         request.body(requestParams.toJSONString());
         Response response = request.put(new URI("https://localhost:8181/digital-paradise/goods/laptop/14a6b7cc-bd4c-3022-83d0-d2af506bfb2b"));
-        Assert.assertEquals(response.statusCode(), 406);
+        Assert.assertEquals(response.statusCode(), 412);
     }
 
 

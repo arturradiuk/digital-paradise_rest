@@ -11,17 +11,12 @@ import com.digitalparadise.model.clients.Client;
 import com.digitalparadise.model.entities.Good;
 import com.digitalparadise.model.entities.Order;
 import com.digitalparadise.model.entities.User;
-import com.digitalparadise.model.goods.Laptop;
-import com.digitalparadise.model.goods.PC;
-import com.digitalparadise.web.filters.EntitySignatureValidatorFilterBinding;
-import com.digitalparadise.web.utils.EntityIdentitySignerVerifier;
 import com.nimbusds.jose.shaded.json.JSONArray;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import com.nimbusds.jose.shaded.json.parser.JSONParser;
 import com.nimbusds.jose.shaded.json.parser.ParseException;
 
 import javax.inject.Inject;
-import javax.json.bind.annotation.JsonbProperty;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -77,7 +72,8 @@ public class OrderService {
         Order storedOrder = null;
         try {
             storedOrder = this.orderManager.getOrderByUUID(orderUuid);
-            return Response.ok().entity(storedOrder).tag(EntityIdentitySignerVerifier.calculateEntitySignature(storedOrder)).build();
+            return Response.ok().entity(storedOrder)
+                    .build();
 
         } catch (RepositoryException e) {
             e.printStackTrace();
@@ -148,13 +144,9 @@ public class OrderService {
     @PUT
     @Path("order/{uuid}")
     @Consumes({MediaType.APPLICATION_JSON})
-    @EntitySignatureValidatorFilterBinding
     public Response update(@PathParam("uuid") String uuid, @HeaderParam("If-Match") @NotNull String tagValue, Order order) {
         if (order.getOrderDateTime() == null || order.getClient() == null || order.getGoods() == null) {
             return Response.status(422).build();
-        }
-        if (!EntityIdentitySignerVerifier.verifyEntityIntegrity(tagValue, order)) {
-            return Response.status(406).build();
         }
 
         UUID orderUuid = null;

@@ -10,8 +10,6 @@ import com.digitalparadise.model.entities.Good;
 import com.digitalparadise.model.entities.User;
 import com.digitalparadise.model.goods.Laptop;
 import com.digitalparadise.model.goods.PC;
-import com.digitalparadise.web.filters.EntitySignatureValidatorFilterBinding;
-import com.digitalparadise.web.utils.EntityIdentitySignerVerifier;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -24,7 +22,7 @@ import java.util.UUID;
 @Path(value = "/goods")
 public class GoodService {
     @Inject
-    GoodManager goodManager ; // todo check necessity
+    GoodManager goodManager; // todo check necessity
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
@@ -46,7 +44,8 @@ public class GoodService {
         Good storedGood = null;
         try {
             storedGood = this.goodManager.getGoodByUUID(goodUuid);
-            return Response.ok().entity(storedGood).tag(EntityIdentitySignerVerifier.calculateEntitySignature(storedGood)).build();
+            return Response.ok().entity(storedGood)
+                    .build();
 
         } catch (RepositoryException e) {
             e.printStackTrace();
@@ -63,7 +62,7 @@ public class GoodService {
             return Response.status(422).build();
         }
 
-        if(laptop.getSold() && (laptop.getCount() != 0)) {
+        if (laptop.getSold() && (laptop.getCount() != 0)) {
             return Response.status(409).build();
         }
 
@@ -97,16 +96,12 @@ public class GoodService {
     @PUT
     @Path("laptop/{uuid}")
     @Consumes({MediaType.APPLICATION_JSON})
-    @EntitySignatureValidatorFilterBinding
     public Response update(@PathParam("uuid") String uuid, @HeaderParam("If-Match") @NotNull String tagValue, Laptop laptop) {
         if (laptop.getSold() == null || laptop.getGoodName() == null || laptop.getBasePrice() == null || laptop.getCount() == null ||
                 laptop.getScreenSize() == null || laptop.getUsbAmount() == null || laptop.getHasCamera() == null) {
             return Response.status(422).build();
         }
-        if (!EntityIdentitySignerVerifier.verifyEntityIntegrity(tagValue, laptop)) {
-            return Response.status(406).build();
-        }
-        if(laptop.getSold() && (laptop.getCount() != 0)) {
+        if (laptop.getSold() && (laptop.getCount() != 0)) {
             return Response.status(409).build();
         }
 
@@ -140,13 +135,9 @@ public class GoodService {
     @PUT
     @Path("PC/{uuid}")
     @Consumes({MediaType.APPLICATION_JSON})
-    @EntitySignatureValidatorFilterBinding
     public Response update(@PathParam("uuid") String uuid, @HeaderParam("If-Match") @NotNull String tagValue, PC pc) throws ManagerException {
         if (pc.getSold() == null || pc.getGoodName() == null || pc.getBasePrice() == null || pc.getCount() == null) {
             return Response.status(422).build();
-        }
-        if (!EntityIdentitySignerVerifier.verifyEntityIntegrity(tagValue, pc)) {
-            return Response.status(406).build();
         }
 
         UUID goodUuid = null;
@@ -197,8 +188,6 @@ public class GoodService {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-
-
 
 
 }

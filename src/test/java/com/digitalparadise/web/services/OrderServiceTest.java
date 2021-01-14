@@ -31,6 +31,7 @@ public class OrderServiceTest {
 
         return response.getBody().asString();
     }
+
     @Test
     public void getSelfOrdersTest() throws URISyntaxException {
         String token = getClientToken();

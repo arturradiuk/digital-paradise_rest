@@ -4,7 +4,7 @@ import javax.json.Json;
 import javax.json.JsonValue;
 import javax.json.bind.adapter.JsonbAdapter;
 
-public class SerializeStringToEmptyAdapter implements JsonbAdapter<String, JsonValue> {
+public class SerializeStringToEmptyValue implements JsonbAdapter<String, JsonValue> {
 
     @Override
     public JsonValue adaptToJson(String s) throws Exception {

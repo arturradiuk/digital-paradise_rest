@@ -2,13 +2,12 @@ package com.digitalparadise.model.entities;
 
 import com.digitalparadise.controller.exceptions.user.UserException;
 import com.digitalparadise.web.SignableEntity;
-import com.digitalparadise.web.jsonb.adapters.SerializeStringToEmptyAdapter;
+import com.digitalparadise.web.jsonb.adapters.SerializeStringToEmptyValue;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.json.bind.annotation.*;
-import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
@@ -31,7 +30,7 @@ public abstract class User implements Serializable, SignableEntity {
     @JsonbProperty
     private String password;
 
-    @JsonbTypeAdapter(SerializeStringToEmptyAdapter.class)
+    @JsonbTypeAdapter(SerializeStringToEmptyValue.class)
     public String getPassword() {
         return password;
     }

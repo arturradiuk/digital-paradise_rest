@@ -32,7 +32,7 @@ public class OrderManager implements IManager<Order, UUID> {
     private Repository<Order, UUID> orderRepository;
 
     @Override
-    public void add(Order element) throws RepositoryException { // todo here must be exception
+    public void add(Order element) throws RepositoryException {
         this.orderRepository.add(element);
     }
 

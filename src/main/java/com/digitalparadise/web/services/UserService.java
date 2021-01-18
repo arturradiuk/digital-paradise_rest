@@ -156,11 +156,12 @@ public class UserService {
     @PUT
     @Path("client/{uuid}")
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response updateClient(@PathParam("uuid") String uuid, @HeaderParam("If-Match") @NotNull @NotEmpty String tagValue, Client client) {
+    public Response updateClient(@PathParam("uuid") String uuid, Client client) {
 
-        if (client.getActive() == null || client.getName() == null || client.getPassword() == null || client.getEmail() == null || client.getUuid() == null || client.getPhoneNumber() == null || client.getAddress() == null) {
+        if (client.getActive() == null || client.getName() == null  || client.getEmail() == null || client.getUuid() == null || client.getPhoneNumber() == null || client.getAddress() == null) {
             return Response.status(422).build();
         }
+
 
 
         UUID userUuid = null;
@@ -187,7 +188,7 @@ public class UserService {
             return Response.status(204).build();
         } catch (RepositoryException e) {
             e.printStackTrace();
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(409).build();
         }
 
     }
@@ -195,8 +196,8 @@ public class UserService {
     @PUT
     @Path("admin/{uuid}")
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response updateAdmin(@PathParam("uuid") String uuid, @HeaderParam("If-Match") @NotNull @NotEmpty String tagValue, Administrator admin) {
-        if (admin.getIsHeadAdmin() == null || admin.getName() == null || admin.getPassword() == null || admin.getEmail() == null || admin.getUuid() == null || admin.getAddress() == null) {
+    public Response updateAdmin(@PathParam("uuid") String uuid, Administrator admin) {
+        if (admin.getIsHeadAdmin() == null || admin.getName() == null || admin.getEmail() == null || admin.getUuid() == null || admin.getAddress() == null) {
             return Response.status(422).build();
         }
 
@@ -226,7 +227,7 @@ public class UserService {
             return Response.status(204).build();
         } catch (RepositoryException e) {
             e.printStackTrace();
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(409).build();
         }
 
     }
@@ -234,8 +235,8 @@ public class UserService {
     @PUT
     @Path("employee/{uuid}")
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response updateEmployee(@PathParam("uuid") String uuid, @HeaderParam("If-Match") @NotNull @NotEmpty String tagValue, Employee employee) throws Exception {
-        if (employee.getEarnings() == null || employee.getName() == null || employee.getPassword() == null || employee.getEmail() == null || employee.getUuid() == null || employee.getAddress() == null) {
+    public Response updateEmployee(@PathParam("uuid") String uuid, Employee employee) throws Exception {
+        if (employee.getEarnings() == null || employee.getName() == null || employee.getEmail() == null || employee.getUuid() == null || employee.getAddress() == null) {
             return Response.status(422).build();
         }
 //
@@ -262,7 +263,7 @@ public class UserService {
             return Response.status(204).build();
         } catch (RepositoryException e) {
             e.printStackTrace();
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(409).build();
         }
     }
 
@@ -274,7 +275,7 @@ public class UserService {
     public Response add(Client client) {
 
 
-        if (client.getActive() == null || client.getName() == null || client.getPassword() == null || client.getEmail() == null || client.getPhoneNumber() == null || client.getAddress() == null) {
+        if (client.getActive() == null || client.getName() == null || client.getEmail() == null || client.getPhoneNumber() == null || client.getAddress() == null) {
             return Response.status(422).build();
         }
 
@@ -293,7 +294,7 @@ public class UserService {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response add(Employee employee) throws UserManagerException {
 
-        if (employee.getEarnings() == null || employee.getName() == null || employee.getPassword() == null || employee.getEmail() == null || employee.getAddress() == null) {
+        if (employee.getEarnings() == null || employee.getName() == null  || employee.getEmail() == null || employee.getAddress() == null) {
             return Response.status(422).build();
         }
 
@@ -311,7 +312,7 @@ public class UserService {
     @Path("/administrator")
     @Consumes({MediaType.APPLICATION_JSON})
     public Response add(Administrator admin) throws UserManagerException {
-        if (admin.getIsHeadAdmin() == null || admin.getName() == null || admin.getPassword() == null || admin.getEmail() == null || admin.getAddress() == null) {
+        if (admin.getIsHeadAdmin() == null || admin.getName() == null  || admin.getEmail() == null || admin.getAddress() == null) {
             return Response.status(422).build();
         }
 

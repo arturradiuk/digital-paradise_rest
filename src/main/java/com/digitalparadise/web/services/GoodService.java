@@ -1,7 +1,5 @@
 package com.digitalparadise.web.services;
 
-import com.digitalparadise.controller.exceptions.ManagerException;
-
 import com.digitalparadise.controller.exceptions.repository.RepositoryException;
 import com.digitalparadise.controller.managers.GoodManager;
 import com.digitalparadise.model.entities.Good;
@@ -22,7 +20,7 @@ import java.util.UUID;
 @Path(value = "/goods")
 public class GoodService {
     @Inject
-    GoodManager goodManager ; // todo check necessity
+    GoodManager goodManager;
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
@@ -33,7 +31,7 @@ public class GoodService {
     @GET
     @Path("{uuid}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response get(@PathParam("uuid") String uuid) throws ManagerException {
+    public Response get(@PathParam("uuid") String uuid){
         UUID goodUuid = null;
         try {
             goodUuid = UUID.fromString(uuid);
@@ -53,9 +51,9 @@ public class GoodService {
     }
 
     @POST
-    @Path("/laptop") // todo should we create the similar function for get method with /laptop/{uuid} path ???
+    @Path("/laptop")
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response add(Laptop laptop) throws ManagerException {
+    public Response add(Laptop laptop) {
         if (laptop.getSold() == null || laptop.getGoodName() == null || laptop.getBasePrice() == null || laptop.getCount() == null ||
                 laptop.getScreenSize() == null || laptop.getUsbAmount() == null || laptop.getHasCamera() == null) {
             return Response.status(422).build();
@@ -78,7 +76,7 @@ public class GoodService {
     @POST
     @Path("/PC")
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response add(PC pc) throws ManagerException {
+    public Response add(PC pc) {
         if (pc.getSold() == null || pc.getGoodName() == null || pc.getBasePrice() == null || pc.getCount() == null) {
             return Response.status(422).build();
         }
@@ -137,7 +135,7 @@ public class GoodService {
     @Path("PC/{uuid}")
     @Consumes({MediaType.APPLICATION_JSON})
     @EntitySignatureValidatorFilterBinding
-    public Response update(@PathParam("uuid") String uuid, @HeaderParam("If-Match") @NotNull String tagValue, PC pc) throws ManagerException {
+    public Response update(@PathParam("uuid") String uuid, @HeaderParam("If-Match") @NotNull String tagValue, PC pc) {
         if (pc.getSold() == null || pc.getGoodName() == null || pc.getBasePrice() == null || pc.getCount() == null) {
             return Response.status(422).build();
         }

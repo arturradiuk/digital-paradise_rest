@@ -9,6 +9,7 @@ import com.digitalparadise.model.entities.User;
 import com.digitalparadise.model.repositories.UserRepository;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.security.enterprise.credential.Credential;
 import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.security.enterprise.identitystore.CredentialValidationResult;
@@ -18,6 +19,8 @@ import java.util.Set;
 
 @ApplicationScoped
 public class InMemoryIdentityStore implements IdentityStore {
+
+    @Inject
     private UserRepository userRepository;
 
     @Override

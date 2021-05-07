@@ -1,6 +1,5 @@
 package com.digitalparadise.web.services;
 
-import com.digitalparadise.controller.exceptions.ManagerException;
 import com.digitalparadise.controller.exceptions.OrderException;
 import com.digitalparadise.controller.exceptions.repository.RepositoryException;
 import com.digitalparadise.controller.exceptions.repository.UserRepositoryException;
@@ -60,7 +59,7 @@ public class OrderService {
     @GET
     @Path("{uuid}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response get(@PathParam("uuid") String uuid) throws ManagerException {
+    public Response get(@PathParam("uuid") String uuid){
         UUID orderUuid = null;
         try {
             orderUuid = UUID.fromString(uuid);

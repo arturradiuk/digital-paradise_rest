@@ -13,13 +13,11 @@ import org.testng.Assert;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import static org.testng.Assert.assertFalse;
-
 public class SecurityTests {
 
     public String getEmployeeToken(){
         RequestSpecification request = RestAssured.given();
-        request.relaxedHTTPSValidation(); // --verify=no
+        request.relaxedHTTPSValidation();
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("email", "TolaEmployee@gmail.com");
@@ -35,7 +33,7 @@ public class SecurityTests {
 
     public String getClientToken(){
         RequestSpecification request = RestAssured.given();
-        request.relaxedHTTPSValidation(); // --verify=no
+        request.relaxedHTTPSValidation();
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("email", "Tola@gmail.com");
@@ -50,7 +48,7 @@ public class SecurityTests {
     }
     public String getActiveClientToken(){
         RequestSpecification request = RestAssured.given();
-        request.relaxedHTTPSValidation(); // --verify=no
+        request.relaxedHTTPSValidation();
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("email", "Bolek@gmail.com");
@@ -66,7 +64,7 @@ public class SecurityTests {
 
     public String getAdminToken(){
         RequestSpecification request = RestAssured.given();
-        request.relaxedHTTPSValidation(); // --verify=no
+        request.relaxedHTTPSValidation();
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("email", "TolaAdministrator@gmail.com");
@@ -260,7 +258,7 @@ public class SecurityTests {
         Response response = request.post(new URI("https://localhost:8181/digital-paradise/users/client"));
         Assert.assertEquals(response.statusCode(),409);
     }
-    @Test //To Do
+    @Test
     public void employeeCreateSoldGoodWithNotZeroCount() throws URISyntaxException, ParseException {
         String token = getEmployeeToken();
         RequestSpecification request = RestAssured.given();
@@ -340,7 +338,7 @@ public class SecurityTests {
     @Test
     public void httpsTest() {
         RequestSpecification request = RestAssured.given();
-        request.relaxedHTTPSValidation(); // --verify=no
+        request.relaxedHTTPSValidation();
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("email", "Tola@gmail.com");

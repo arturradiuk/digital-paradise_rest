@@ -52,7 +52,7 @@ public class UserService {
 
     @GET
     @Path("{uuid}")
-    @Produces({MediaType.APPLICATION_JSON})  // todo should we remove this method ??
+    @Produces({MediaType.APPLICATION_JSON})
     public Response get(@PathParam("uuid") String uuid) throws UserManagerException {
         UUID userUuid = null;
         try {
@@ -252,7 +252,7 @@ public class UserService {
         if (employee.getEarnings() == null || employee.getName() == null || employee.getPassword() == null || employee.getEmail() == null || employee.getUuid() == null || employee.getAddress() == null) {
             return Response.status(422).build();
         }
-//
+
         if (!EntityIdentitySignerVerifier.verifyEntityIntegrity(tagValue, employee)) {
             return Response.status(406).build();
         }

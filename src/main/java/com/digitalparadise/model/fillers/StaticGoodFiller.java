@@ -10,18 +10,9 @@ import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class StaticGoodFiller implements DataFiller {
-//    @Override
-//    public void Fill(List<Good> goodList) {
-//        goodList = new ArrayList<>();
-//        Good good = new Laptop();
-//        goodList.add(good);
-//        System.out.println(Arrays.toString(goodList.toArray()));
-//    }
-
     @Override
     public List<Good> Fill() {
         List<Good> goods = new CopyOnWriteArrayList<>();
-//        List<Good> goods = new ArrayList<>(); // todo causes java.util.ConcurrentModificationException during remove operation; is there any other solution
         try {
             Good temp = new Laptop(110, "Lenovo", 16, 256, 13, true, 2, 5);
             temp.setUuid(UUID.fromString("14a6b7cc-bd4c-3022-83d0-d2af506bfb2b"));

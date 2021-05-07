@@ -16,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @Data
 @NoArgsConstructor
-public class UserRepository implements Repository<User, UUID> { // todo write methods getBy...
+public class UserRepository implements Repository<User, UUID> {
 
     private List<User> people;
 
@@ -47,18 +47,10 @@ public class UserRepository implements Repository<User, UUID> { // todo write me
     public void update(UUID id, User element) throws RepositoryException {
         synchronized (this.people) {
             boolean exists = false;
-
-//            this.people.stream().filter(c -> c.getEmail().equals(element.getEmail())).count();
-//            for(User user: people)
-
-//            for (User user : people) {
             for (int i = 0; i < people.size(); i++) {
                 if (people.get(i).isEmailEquals(element.getEmail()) && !people.get(i).equals(element))
-                    throw new UserRepositoryException("This email is already taken");
-
+                    throw new UserRepositoryException(UserRepositoryException.THIS_EMAIL_IS_TAKEN);
             }
-
-//            }
 
             for (int i = 0; i < people.size(); i++) {
                 if (id.equals(people.get(i).getUuid())) {
@@ -79,7 +71,7 @@ public class UserRepository implements Repository<User, UUID> { // todo write me
                 if (user.equals(element))
                     throw new UserRepositoryException(UserRepositoryException.EXIST_USER);
                 if (user.isEmailEquals(element.getEmail()))
-                    throw new UserRepositoryException("This email is already taken");
+                    throw new UserRepositoryException(UserRepositoryException.THIS_EMAIL_IS_TAKEN);
             }
             this.people.add(element);
         }
@@ -114,7 +106,6 @@ public class UserRepository implements Repository<User, UUID> { // todo write me
 
     public User findByLoginPasswordActive(String email, String password) throws UserRepositoryException {
         User user = this.getResourceByEmail(email);
-
         if (user.getPassword().equals(password)) {
             if (user instanceof Client) {
                 Client client = (Client) user;
@@ -124,11 +115,7 @@ public class UserRepository implements Repository<User, UUID> { // todo write me
                     return null;
             }else
                 return user;
-
         }
         return null;
-
     }
-
-
 }

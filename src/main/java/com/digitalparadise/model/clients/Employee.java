@@ -18,7 +18,6 @@ import java.util.UUID;
 
 @Data
 @ToString(callSuper = true)
-
 @NoArgsConstructor
 @JsonbNillable(value = true)
 public class Employee extends User {
@@ -26,23 +25,6 @@ public class Employee extends User {
     @JsonbProperty
     private Float earnings;
 
-
-//    public Employee(String email,
-//                    String name,
-//                    Address address,
-//                    Float earnings) throws UserException {
-//        super(email, name, address);
-//
-//        if (earnings == null)
-//            throw new EmployeeException(EmployeeException.NULL_FIELD);
-//
-//        //        if (earnings.equals(""))
-//        //            throw new EmployeeException(EmployeeException.EMPTY_FIELD);
-//
-//        this.earnings = earnings;
-//    }
-
-//    @JsonbCreator
     public Employee(
                     @JsonbProperty("email") String email,
                     @JsonbProperty("name") String name,
@@ -53,9 +35,6 @@ public class Employee extends User {
 
         if (earnings == null)
             throw new EmployeeException(EmployeeException.NULL_FIELD);
-
-//        if (earnings.equals(""))
-//            throw new EmployeeException(EmployeeException.EMPTY_FIELD);
 
         this.earnings = earnings;
     }

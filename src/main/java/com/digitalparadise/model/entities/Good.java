@@ -36,7 +36,6 @@ public abstract class Good implements Serializable, SignableEntity {
     @JsonbProperty
     private Double basePrice;
 
-//    @JsonbTransient // todo remove comment here
     @JsonbProperty
     private Integer count;
 
@@ -67,14 +66,13 @@ public abstract class Good implements Serializable, SignableEntity {
         } else if (count < 0) {
             throw new GoodException(GoodException.NEGATIVE_AMOUNT);
         }
-
         this.basePrice = basePrice;
         this.goodName = goodName;
         this.count = count;
     }
 
     @Override
-    public boolean equals(Object o) { // todo remember
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Good good = (Good) o;
@@ -86,46 +84,6 @@ public abstract class Good implements Serializable, SignableEntity {
         return Objects.hash(uuid);
     }
 
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-
-    public Boolean getSold() {
-        return sold;
-    }
-
-    public void setSold(Boolean sold) {
-        this.sold = sold;
-    }
-
-    public String getGoodName() {
-        return goodName;
-    }
-
-    public void setGoodName(String goodName) {
-        this.goodName = goodName;
-    }
-
-    public Double getBasePrice() {
-        return basePrice;
-    }
-
-    public void setBasePrice(Double basePrice) {
-        this.basePrice = basePrice;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
-    }
 
 
 }

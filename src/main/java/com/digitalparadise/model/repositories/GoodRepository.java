@@ -14,10 +14,10 @@ import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 
-//@ApplicationScoped // todo check the necessity
+
 @Data
 @NoArgsConstructor
-public class GoodRepository implements Repository<Good, UUID> { // todo write methods getBy...
+public class GoodRepository implements Repository<Good, UUID> {
     private List<Good> goods;
 
     @Override
@@ -27,7 +27,7 @@ public class GoodRepository implements Repository<Good, UUID> { // todo write me
                 return g;
             }
         }
-        throw new GoodRepositoryException("There is no good with such uuid in the GoodRepository");
+        throw new GoodRepositoryException(GoodRepositoryException.NOT_EXIST_GOOD_WITH_SUCH_UUID);
     }
 
     @Override

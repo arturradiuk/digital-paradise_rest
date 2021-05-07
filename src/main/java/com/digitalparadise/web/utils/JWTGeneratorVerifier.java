@@ -13,8 +13,8 @@ import java.util.Date;
 
 public class JWTGeneratorVerifier {
 
-    private static final String SECRET = "8YuS04LvRqjpnGnet02bvcdoLIubmcXEt597Gj1rU6bW2MXHvQM90jNnascqF71jsmbp-co91xqE1hie-xKz68BwqAfukX8pGCpXtlzXxrXF_fz46kTcC1HsbvwDzLpxaoAoRKAtEt0onytN4wflPcNvzWjZvAYVcfhb6ydUofU";
-//    private static final long JWT_TIMEOUT_MS = 15 * 60 * 1000;
+    private static final String SECRET = "8YuS04LvRqjpnGnet02bvcdoLIubmcXEt597Gj1rU6bW2MXHvQM90jNnascqF71jsmbp-co91xqE1hie-" +
+            "xKz68BwqAfukX8pGCpXtlzXxrXF_fz46kTcC1HsbvwDzLpxaoAoRKAtEt0onytN4wflPcNvzWjZvAYVcfhb6ydUofU";
     private static final long JWT_TIMEOUT_MS = 1 * 60 * 1000;
 
     public static String generateJWTString(CredentialValidationResult credential) {

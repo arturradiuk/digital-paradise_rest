@@ -16,8 +16,6 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @ToString(callSuper = true)
-
-
 @JsonbNillable(value = true)
 public abstract class User implements Serializable, SignableEntity {
 
@@ -51,21 +49,7 @@ public abstract class User implements Serializable, SignableEntity {
     private Address address;
 
     public void changeActivity() {
-    } // todo remove it
-
-
-//    public User(String email,
-//                String name, Address address) throws UserException {
-//        if (email == null || address == null)
-//            throw new UserException(UserException.NULL_FIELD);
-//
-//        if (email.equals("") || name.equals(""))
-//            throw new UserException(UserException.EMPTY_FIELD);
-//
-//        this.email = email;
-//        this.name = name;
-//        this.address = address;
-//    }
+    }
 
 
     @JsonbCreator
@@ -75,13 +59,6 @@ public abstract class User implements Serializable, SignableEntity {
                 @JsonbProperty("address") Address address,
                 @JsonbProperty("password") String password) throws UserException {
 
-//        if (uuid == null || email == null || address == null)
-//        if (email == null || address == null)
-//            throw new UserException(UserException.NULL_FIELD);
-//
-//        if (email.equals("") || name.equals(""))
-//            throw new UserException(UserException.EMPTY_FIELD);
-
         this.uuid = uuid;
         this.email = email;
         this.name = name;
@@ -90,7 +67,7 @@ public abstract class User implements Serializable, SignableEntity {
     }
 
     @Override
-    public boolean equals(Object o) { // todo remember
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;

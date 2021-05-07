@@ -11,8 +11,6 @@ import com.digitalparadise.model.clients.Client;
 import com.digitalparadise.model.entities.Good;
 import com.digitalparadise.model.entities.Order;
 import com.digitalparadise.model.entities.User;
-import com.digitalparadise.model.goods.Laptop;
-import com.digitalparadise.model.goods.PC;
 import com.digitalparadise.web.filters.EntitySignatureValidatorFilterBinding;
 import com.digitalparadise.web.utils.EntityIdentitySignerVerifier;
 import com.nimbusds.jose.shaded.json.JSONArray;
@@ -21,7 +19,6 @@ import com.nimbusds.jose.shaded.json.parser.JSONParser;
 import com.nimbusds.jose.shaded.json.parser.ParseException;
 
 import javax.inject.Inject;
-import javax.json.bind.annotation.JsonbProperty;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -54,13 +51,9 @@ public class OrderService {
     @Path("_self")
     @Produces({MediaType.APPLICATION_JSON})
     public Response findSelf(@Context SecurityContext securityContext) {
-
         String userEmail = securityContext.getUserPrincipal().getName();
-
         List<Order> storedUserOrders = orderManager.getAllOrdersForTheEmail(userEmail);
-
         return Response.ok().entity(storedUserOrders).build();
-
     }
 
     @GET
@@ -86,10 +79,8 @@ public class OrderService {
     }
 
     @POST
-    @Path("/order") // todo should we create the similar function for get method with /laptop/{uuid} path ???
-    // todo user uuid, goods uuids
+    @Path("/order")
     @Consumes({MediaType.APPLICATION_JSON})
-//    public Response add(@Context SecurityContext securityContext, ArrayList<String> goodsStr) throws ManagerException {
     public Response add(@Context SecurityContext securityContext, String goodsStr) {
 
         JSONObject jsonObject = null;
@@ -101,12 +92,11 @@ public class OrderService {
             e.printStackTrace();
         }
 
-
         JSONArray jsonArray = (JSONArray) jsonObject.get("goodsStr");
         List<String> goodsUuidStrList = new ArrayList<>();
 
-        for (int i = 0; i < jsonArray.size(); i++) {
-            goodsUuidStrList.add((String) jsonArray.get(i));
+        for (Object o : jsonArray) {
+            goodsUuidStrList.add((String) o);
         }
 
         Client client = null;
@@ -189,7 +179,7 @@ public class OrderService {
     @DELETE
     @Path("{uuid}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response delete(@PathParam("uuid") String uuid) throws ManagerException {
+    public Response delete(@PathParam("uuid") String uuid) {
         UUID orderUuid = null;
         try {
             orderUuid = UUID.fromString(uuid);

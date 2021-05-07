@@ -20,12 +20,11 @@ import org.testng.Assert;
 import javax.swing.plaf.TreeUI;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.UUID;
 
 public class UserCRUTest {
     public String getAdminToken(){
         RequestSpecification request = RestAssured.given();
-        request.relaxedHTTPSValidation(); // --verify=no
+        request.relaxedHTTPSValidation();
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("email", "TolaAdministrator@gmail.com");
@@ -40,7 +39,7 @@ public class UserCRUTest {
     }
 
     @Test
-    public void createAndReadTest() throws URISyntaxException, AddressException, UserException, ParseException {
+    public void createAndReadTest() throws URISyntaxException, ParseException {
         String token = getAdminToken();
         RequestSpecification request = RestAssured.given();
         request.relaxedHTTPSValidation();

@@ -16,7 +16,6 @@ public class UserServiceTest {
 
     @Test
     public void clientSignUpTest() {
-//    http --verify=no -v POST https://localhost:8181/digital-paradise/authenticate email=Lolek@gmail.com password=123
         RestAssured.baseURI = "https://localhost:8181/digital-paradise";
         RequestSpecification request = RestAssured.given();
         request.relaxedHTTPSValidation(); // --verify=no
@@ -36,10 +35,9 @@ public class UserServiceTest {
     }
     @Test
     public void employeeSignUpTest() {
-//    http --verify=no -v POST https://localhost:8181/digital-paradise/authenticate email=TolaEmployee@gmail.com password=123
         RestAssured.baseURI = "https://localhost:8181/digital-paradise";
         RequestSpecification request = RestAssured.given();
-        request.relaxedHTTPSValidation(); // --verify=no
+        request.relaxedHTTPSValidation();
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("email", "TolaEmployee@gmail.com");
@@ -56,7 +54,6 @@ public class UserServiceTest {
 
     @Test
     public void administratorSignUpTest() {
-//    http --verify=no -v POST https://localhost:8181/digital-paradise/authenticate email=TolaEmployee@gmail.com password=123
         RestAssured.baseURI = "https://localhost:8181/digital-paradise";
         RequestSpecification request = RestAssured.given();
         request.relaxedHTTPSValidation(); // --verify=no
@@ -77,10 +74,8 @@ public class UserServiceTest {
 
     @Test
     public void clientAccessTest() throws URISyntaxException {
-//   http --verify=no -v GET https://localhost:8181/digital-paradise/users/_self "Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMb2xla0BnbWFpbC5jb20iLCJhdXRoIjoiQ0xJRU5UIiwiaXNzIjoiRGlnaXRhbCBwYXJhZGlzZSBzdG9yZSIsImV4cCI6MTYwOTM2NTk1N30.jiu0zLW4Xd6oi2kqhoX7ZXCBS-4iWjOEF_Y2LXj8gjk"
-
         RequestSpecification request = RestAssured.given();
-        request.relaxedHTTPSValidation(); // --verify=no
+        request.relaxedHTTPSValidation();
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("email", "Bolek@gmail.com");
@@ -147,7 +142,7 @@ public class UserServiceTest {
     @Test
     public void adminAccessTest() throws URISyntaxException {
         RequestSpecification request = RestAssured.given();
-        request.relaxedHTTPSValidation(); // --verify=no
+        request.relaxedHTTPSValidation();
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("email", "TolaAdministrator@gmail.com");

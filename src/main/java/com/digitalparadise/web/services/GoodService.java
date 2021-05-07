@@ -4,10 +4,8 @@ import com.digitalparadise.controller.exceptions.ManagerException;
 
 import com.digitalparadise.controller.exceptions.repository.RepositoryException;
 import com.digitalparadise.controller.managers.GoodManager;
-import com.digitalparadise.model.clients.Client;
 import com.digitalparadise.model.entities.Good;
 
-import com.digitalparadise.model.entities.User;
 import com.digitalparadise.model.goods.Laptop;
 import com.digitalparadise.model.goods.PC;
 import com.digitalparadise.web.filters.EntitySignatureValidatorFilterBinding;
@@ -84,8 +82,6 @@ public class GoodService {
         if (pc.getSold() == null || pc.getGoodName() == null || pc.getBasePrice() == null || pc.getCount() == null) {
             return Response.status(422).build();
         }
-
-
         try {
             this.goodManager.add(pc);
             return Response.status(201).build();
@@ -180,7 +176,7 @@ public class GoodService {
     @DELETE
     @Path("{uuid}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response delete(@PathParam("uuid") String uuid) throws ManagerException {
+    public Response delete(@PathParam("uuid") String uuid) {
         UUID goodUuid = null;
         try {
             goodUuid = UUID.fromString(uuid);
@@ -197,8 +193,4 @@ public class GoodService {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-
-
-
-
 }

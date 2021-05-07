@@ -1,7 +1,5 @@
 package com.digitalparadise.web.services;
 
-import com.digitalparadise.controller.exceptions.user.AddressException;
-import com.digitalparadise.controller.exceptions.user.UserException;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import com.nimbusds.jose.shaded.json.parser.JSONParser;
 import com.nimbusds.jose.shaded.json.parser.ParseException;
@@ -10,7 +8,6 @@ import io.restassured.http.Header;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.testng.annotations.Test;
-import org.junit.runner.Request;
 import org.testng.Assert;
 
 import java.net.URI;
@@ -19,7 +16,7 @@ import java.net.URISyntaxException;
 public class GoodCRUDTest {
     public String getEmployeeToken(){
         RequestSpecification request = RestAssured.given();
-        request.relaxedHTTPSValidation(); // --verify=no
+        request.relaxedHTTPSValidation();
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("email", "TolaEmployee@gmail.com");

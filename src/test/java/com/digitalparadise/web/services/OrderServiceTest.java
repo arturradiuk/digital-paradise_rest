@@ -18,7 +18,7 @@ import static org.testng.Assert.*;
 public class OrderServiceTest {
     public String getClientToken(){
         RequestSpecification request = RestAssured.given();
-        request.relaxedHTTPSValidation(); // --verify=no
+        request.relaxedHTTPSValidation();
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("email", "Tola@gmail.com");

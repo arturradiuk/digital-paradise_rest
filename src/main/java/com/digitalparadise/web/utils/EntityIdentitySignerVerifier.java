@@ -17,8 +17,8 @@ public class EntityIdentitySignerVerifier {
             JWSSigner signer = new MACSigner(SECRET);
             JWSObject jwsObject = new JWSObject(new JWSHeader(JWSAlgorithm. HS256), new Payload(entity.getSignablePayload()));
             jwsObject.sign(signer);
-
             return jwsObject.serialize();
+
         } catch (JOSEException e) {
             e.printStackTrace();
             return "ETag failure";
@@ -29,9 +29,8 @@ public class EntityIdentitySignerVerifier {
     public static boolean validateEntitySignature(String tagValue) {
         try{
             JWSObject jwsObject = JWSObject.parse(tagValue);
-                JWSVerifier verifier = new MACVerifier(SECRET);
-            boolean temp = jwsObject.verify(verifier);
-            return temp;
+            JWSVerifier verifier = new MACVerifier(SECRET);
+            return jwsObject.verify(verifier);
 
         } catch (JOSEException | ParseException e) {
             e.printStackTrace();
@@ -43,9 +42,8 @@ public class EntityIdentitySignerVerifier {
         try{
             final String valueFromIfMatchHeader = JWSObject.parse(tagValue).getPayload().toString();
             final String valueFromEntitySignablePayload = entity.getSignablePayload();
-            boolean fist=validateEntitySignature(tagValue); // todo remove it
-            boolean second = valueFromEntitySignablePayload.equals( valueFromIfMatchHeader   ); // todo remove it
-            return  fist && second;
+            return  validateEntitySignature(tagValue) && valueFromEntitySignablePayload.equals( valueFromIfMatchHeader);
+
         } catch (ParseException e) {
             e.printStackTrace();
             return false;

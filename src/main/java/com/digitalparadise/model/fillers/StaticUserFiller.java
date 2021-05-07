@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class StaticUserFiller implements DataFiller { // todo rename to people filler
+public class StaticUserFiller implements DataFiller {
     @Override
     public List<User> Fill() {
         List<User> people = new CopyOnWriteArrayList<>();
@@ -24,26 +24,21 @@ public class StaticUserFiller implements DataFiller { // todo rename to people f
         try {
 
             User temp = new Client("Tola@gmail.com", "Tola", address,"672817289","123");
-//            temp.setUuid(UUID.nameUUIDFromBytes(new String("1234567890_person").getBytes()));
             temp.setUuid(UUID.fromString("1d6b6bd5-be82-3a41-87ac-5cd1b3b24756"));
             people.add(temp);
 
            User temp2 = new Client("Lolek@gmail.com", "Lolek", address,"672817289","123");
-//            temp2.setUuid(UUID.nameUUIDFromBytes(new String("2234567890_person").getBytes()));
             temp2.setUuid(UUID.fromString("2d6b6bd5-be82-3a41-87ac-5cd1b3b24756"));
             people.add(temp2);
 
             temp = new Client("Bolek@gmail.com", "Bolek", address,"672817289","123");
-//            temp.setUuid(UUID.nameUUIDFromBytes(new String("3234567890_person").getBytes()));
             temp.setUuid(UUID.fromString("3d6b6bd5-be82-3a41-87ac-5cd1b3b24756"));
             people.add(temp);
 
             temp = new Client("Zbigniew@gmail.com", "Zbigniew", address,"672817289","123");
-//            temp.setUuid(UUID.nameUUIDFromBytes(new String("3234567890_person").getBytes()));
             temp.setUuid(UUID.fromString("106b6bd5-be82-3a41-87ac-5cd1b3b24756"));
             temp.changeActivity();
             people.add(temp);
-//
             
             temp = new Employee("TolaEmployee@gmail.com", "TolaEmployee", address, (float) 2800,"123");
             temp.setUuid(UUID.fromString("4d6b6bd5-be82-3a41-87ac-5cd1b3b24756"));
@@ -56,9 +51,6 @@ public class StaticUserFiller implements DataFiller { // todo rename to people f
             temp = new Employee("BolekEmployee@gmail.com", "BolekEmployee", address, (float) 5000,"123");
             temp.setUuid(UUID.fromString("6d6b6bd5-be82-3a41-87ac-5cd1b3b24756"));
             people.add(temp);
-
-//
-
             
             temp = new Administrator("TolaAdministrator@gmail.com", "TolaAdministrator", address,true,"123");
             temp.setUuid(UUID.fromString("7d6b6bd5-be82-3a41-87ac-5cd1b3b24756"));

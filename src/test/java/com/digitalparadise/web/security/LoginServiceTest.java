@@ -16,10 +16,9 @@ import java.net.URISyntaxException;
 public class LoginServiceTest {
     @Test
     public void clientSuccessfulSignUp(){
-//      http --verify=no -v POST https://localhost:8181/digital-paradise/authenticate email=Tola@gmail.com password=123
         RestAssured.baseURI = "https://localhost:8181/digital-paradise";
         RequestSpecification request = RestAssured.given();
-        request.relaxedHTTPSValidation(); // --verify=no
+        request.relaxedHTTPSValidation();
         JSONObject requestParams = new JSONObject();
         requestParams.put("email", "Tola@gmail.com");
         requestParams.put("password", "123");
@@ -36,15 +35,12 @@ public class LoginServiceTest {
 
     @Test
     public void clientUnSuccessfulSignUp(){
-//      http --verify=no -v POST https://localhost:8181/digital-paradise/authenticate email=Tola@gmail.com password=haslo
-//       
-
         RestAssured.baseURI = "https://localhost:8181/digital-paradise";
         RequestSpecification request = RestAssured.given();
-        request.relaxedHTTPSValidation(); // --verify=no
+        request.relaxedHTTPSValidation();
         JSONObject requestParams = new JSONObject();
         requestParams.put("email", "Tola@gmail.com");
-        requestParams.put("password", "haslo"); // wrong password
+        requestParams.put("password", "haslo");
 
         request.header("Content-Type", "application/json");
         request.body(requestParams.toJSONString());
@@ -57,7 +53,7 @@ public class LoginServiceTest {
     }
 
     @Test
-    public void tokenRefresh() throws URISyntaxException, InterruptedException {
+    public void tokenRefresh() throws URISyntaxException {
         RequestSpecification request = RestAssured.given();
         request.relaxedHTTPSValidation(); // --verify=no
 
@@ -73,7 +69,6 @@ public class LoginServiceTest {
         String token = response.getBody().asString();
         RequestSpecification requestGet= RestAssured.given();
         requestGet.relaxedHTTPSValidation();
-
 
         requestGet.header(new Header("Authorization","Bearer " + token) );
         requestGet.header("Content-Type", "application/json");

@@ -1,7 +1,7 @@
 package com.digitalparadise.controller.managers;
 
-import com.digitalparadise.controller.exceptions.ManagerException;
 import com.digitalparadise.controller.exceptions.repository.RepositoryException;
+import com.digitalparadise.controller.exceptions.manager.GoodManagerException;
 import lombok.NoArgsConstructor;
 import com.digitalparadise.model.entities.Good;
 import com.digitalparadise.model.entities.Order;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class GoodManager implements IManager<Good, UUID> {
 
     @Inject
-    private Repository<Good, UUID> goodRepository; // = new GoodRepository();
+    private Repository<Good, UUID> goodRepository;
 
 
     public List<Good> getGoods(List<String> goodsUuid) throws RepositoryException {
@@ -50,15 +50,15 @@ public class GoodManager implements IManager<Good, UUID> {
     }
 
     @Override
-    public void remove(Good good) throws RepositoryException { // save deleting
+    public void remove(Good good) throws RepositoryException {
         this.goodRepository.remove(good);
     }
 
-    public void remove(OrderManager orderManager, Good good) throws ManagerException, RepositoryException {
+    public void remove(OrderManager orderManager, Good good) throws GoodManagerException, RepositoryException {
         for (Order o : orderManager.getAll()) {
             for (Good g : o.getGoods()) {
                 if (g.getUuid().equals(good.getUuid())) {
-                    throw new ManagerException("Cannot delete the good that is a part of order.");
+                    throw new GoodManagerException(GoodManagerException.CANNOT_DELETE);
                 }
 
             }
@@ -73,13 +73,11 @@ public class GoodManager implements IManager<Good, UUID> {
 
 
     public List<Good> getAllCurrentLaptops() {
-        List<Good> laptops = this.getAll().stream().filter(lapop -> lapop instanceof Laptop).collect(Collectors.toList());
-        return laptops;
+        return this.getAll().stream().filter(lapop -> lapop instanceof Laptop).collect(Collectors.toList());
     }
 
     public List<Good> getAllCurrentPCs() {
-        List<Good> pcs = this.getAll().stream().filter(pc -> pc instanceof PC).collect(Collectors.toList());
-        return pcs;
+        return this.getAll().stream().filter(pc -> pc instanceof PC).collect(Collectors.toList());
     }
 
 }

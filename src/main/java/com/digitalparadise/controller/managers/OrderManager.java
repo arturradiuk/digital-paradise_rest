@@ -1,15 +1,14 @@
 package com.digitalparadise.controller.managers;
 
 
-import com.digitalparadise.controller.exceptions.ManagerException;
 import com.digitalparadise.controller.exceptions.OrderException;
 import com.digitalparadise.controller.exceptions.repository.RepositoryException;
+import com.digitalparadise.controller.exceptions.manager.GoodManagerException;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.digitalparadise.model.clients.Client;
 import com.digitalparadise.model.entities.Good;
 import com.digitalparadise.model.entities.Order;
-import com.digitalparadise.model.entities.User;
 import com.digitalparadise.model.repositories.Repository;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -32,7 +31,7 @@ public class OrderManager implements IManager<Order, UUID> {
     private Repository<Order, UUID> orderRepository;
 
     @Override
-    public void add(Order element) throws RepositoryException { // todo here must be exception
+    public void add(Order element) throws RepositoryException {
         this.orderRepository.add(element);
     }
 
@@ -53,8 +52,7 @@ public class OrderManager implements IManager<Order, UUID> {
     }
 
 
-    public Order createOrder(GoodManager goodManager, List<Good> goods, Client client) throws OrderException, RepositoryException, ManagerException {
-        boolean exists = false;
+    public Order createOrder(GoodManager goodManager, List<Good> goods, Client client) throws OrderException, RepositoryException, GoodManagerException {
 
         Map<Good, Integer> tempMap = new HashMap<Good, Integer>();
 
@@ -74,7 +72,7 @@ public class OrderManager implements IManager<Order, UUID> {
                 goodManager.getAll()) {
             if(tempMap.containsKey(g)){
                 if( (g.getCount() - tempMap.get(g)) < 0){
-                    throw new ManagerException("There are not enough goods in magazine"); // todo add static string in ManagerException
+                    throw new GoodManagerException(GoodManagerException.NOT_ENOUGH_GOODS);
                 }
                 else{
                     g.setCount(g.getCount()-tempMap.get(g));

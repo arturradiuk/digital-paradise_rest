@@ -1,8 +1,8 @@
 package com.digitalparadise.controller.managers;
 
-import com.digitalparadise.controller.exceptions.ManagerException;
 import com.digitalparadise.controller.exceptions.repository.RepositoryException;
 import com.digitalparadise.controller.exceptions.repository.UserRepositoryException;
+import com.digitalparadise.controller.exceptions.manager.GoodManagerException;
 import com.digitalparadise.model.repositories.UserRepository;
 import lombok.NoArgsConstructor;
 import com.digitalparadise.model.clients.Administrator;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class UserManager implements IManager<User, UUID> {
 
     @Inject
-    private Repository<User, UUID> userRepository;// = new PersonRepository();
+    private Repository<User, UUID> userRepository;
 
     @Override
     public void add(User user) throws RepositoryException {
@@ -37,10 +37,10 @@ public class UserManager implements IManager<User, UUID> {
         this.userRepository.remove(user);
     }
 
-    public void remove(OrderManager orderManager, User user) throws ManagerException, RepositoryException {
+    public void remove(OrderManager orderManager, User user) throws GoodManagerException, RepositoryException {
         for (Order o : orderManager.getAll()) {
             if (o.getClient().getUuid().equals(user.getUuid()))
-                throw new ManagerException("Cannot delete the user that is a part of the order");
+                throw new GoodManagerException(GoodManagerException.CANNOT_DELETE);
         }
         this.userRepository.remove(user);
 
@@ -63,18 +63,15 @@ public class UserManager implements IManager<User, UUID> {
 
 
     public List<User> getAllClients() {
-        List<User> people = this.getAll().stream().filter(person -> person instanceof Client).collect(Collectors.toList());
-        return people;
+        return this.getAll().stream().filter(person -> person instanceof Client).collect(Collectors.toList());
     }
 
-    public List<User> getAllEmployees() { // todo move to the repository
-        List<User> people = this.getAll().stream().filter(person -> person instanceof Employee).collect(Collectors.toList());
-        return people;
+    public List<User> getAllEmployees() {
+        return this.getAll().stream().filter(person -> person instanceof Employee).collect(Collectors.toList());
     }
 
     public List<User> getAllAdministrators() {
-        List<User> people = this.getAll().stream().filter(person -> person instanceof Administrator).collect(Collectors.toList());
-        return people;
+        return this.getAll().stream().filter(person -> person instanceof Administrator).collect(Collectors.toList());
     }
 
     public User findByEmail(String email) throws UserRepositoryException {

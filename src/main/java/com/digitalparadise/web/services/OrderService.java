@@ -4,6 +4,7 @@ import com.digitalparadise.controller.exceptions.ManagerException;
 import com.digitalparadise.controller.exceptions.OrderException;
 import com.digitalparadise.controller.exceptions.repository.RepositoryException;
 import com.digitalparadise.controller.exceptions.repository.UserRepositoryException;
+import com.digitalparadise.controller.exceptions.manager.GoodManagerException;
 import com.digitalparadise.controller.managers.GoodManager;
 import com.digitalparadise.controller.managers.OrderManager;
 import com.digitalparadise.controller.managers.UserManager;
@@ -128,7 +129,7 @@ public class OrderService {
         try {
             this.orderManager.createOrder(this.goodManager, goods, client);
             return Response.ok().build();
-        } catch (OrderException | RepositoryException | ManagerException e) {
+        } catch (OrderException | RepositoryException | GoodManagerException e) {
             e.printStackTrace();
             return Response.status(422).build();
         }
